@@ -1,39 +1,35 @@
-package com.netcraker.project.bd.shared.objects;
+package com.netcraker.project.bd.shared.objects.client;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
 @Json
 public class Tariff extends ObjectBD {
-    private int id;
-    private String tariffName;
+    //private String tariffName;
     private int statusId;
 
     public Tariff(int tariffId) {
-        id= tariffId;
+        super(tariffId);
     }
 
     @Override
     public String toString()
     {
-        return tariffName;
-    }
+//        return tariffName;
+        return getObjName();
+//
+ }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getTariffName() {
-        return tariffName;
+        return getObjName();
     }
 
     public void setTariffName(String tariffName) {
-        this.tariffName = tariffName;
+        setObjName(tariffName);
+        //this.tariffName = tariffName;
     }
 
     public int getStatusId() {
@@ -44,14 +40,12 @@ public class Tariff extends ObjectBD {
         this.statusId = statusId;
     }
 
-    public Tariff() {
-    }
-
     @JsonCreator
-    public Tariff(@JsonProperty("id") int id,@JsonProperty("tariffName") String tariffName,@JsonProperty("statusId") int statusId) {
-
-        this.id = id;
-        this.tariffName = tariffName;
+    public Tariff(@JsonProperty("id") int id,@JsonProperty("tariffName") String tariffName,
+                  @JsonProperty("statusId") int statusId) {
+        super(id);
+        setObjName(tariffName);
+        //this.tariffName = tariffName;
         this.statusId = statusId;
     }
 }

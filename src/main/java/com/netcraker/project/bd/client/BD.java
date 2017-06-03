@@ -34,6 +34,7 @@ public class BD implements EntryPoint {
   static boolean loadtype = false;
 
   final CustomerPanel customerPanel = new CustomerPanel();
+  //final TreePanel treePanel = new TreePanel();
   final protected RootPanel main = RootPanel.get("main");
 
   protected final RootPanel menuButton = RootPanel.get("menu-buttons");
@@ -97,7 +98,10 @@ public class BD implements EntryPoint {
     }));
     menuBar.addItem(new MenuItem("Путь", new Scheduler.ScheduledCommand() {
       @Override
-      public void execute() {}
+      public void execute() {
+        /*treePanel.replaceWindows();
+        treePanel.refreshData();*/
+      }
     }));
     menuBar.addItem(new MenuItem("Здания", new Scheduler.ScheduledCommand() {
       @Override

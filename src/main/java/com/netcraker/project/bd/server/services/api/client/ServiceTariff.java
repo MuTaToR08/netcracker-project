@@ -1,8 +1,8 @@
-package com.netcraker.project.bd.server.services.api;
+package com.netcraker.project.bd.server.services.api.client;
 
 import com.netcraker.project.bd.config.ListenerContext;
-import com.netcraker.project.bd.server.Model.client.ModelTariff;
-import com.netcraker.project.bd.shared.objects.Tariff;
+import com.netcraker.project.bd.server.model.client.ModelTariff;
+import com.netcraker.project.bd.shared.objects.client.Tariff;
 import org.fusesource.restygwt.client.RestService;
 
 import javax.servlet.ServletContext;
@@ -19,8 +19,8 @@ import java.util.Map;
 @Path("tariff")
 public class ServiceTariff implements RestService {
 
-    final Map<Integer, Tariff> allTariff = new HashMap<>();
-    static long cache = 0;
+    private final Map<Integer, Tariff> allTariff = new HashMap<>();
+    private static long cache = 0;
     @Context
     private ServletContext context;
 
@@ -32,10 +32,9 @@ public class ServiceTariff implements RestService {
             return allTariff.get(id);
 
         ModelTariff modelTariff = new ModelTariff(context);
-        Tariff tariff = modelTariff.getById(id);
 
 
-        return tariff;
+        return modelTariff.getById(id);
     }
 
 

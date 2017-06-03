@@ -1,8 +1,8 @@
 package com.netcraker.project.bd.client.api;
 
 
-import com.netcraker.project.bd.shared.objects.CSI;
-import com.netcraker.project.bd.shared.objects.Customer;
+import com.netcraker.project.bd.shared.objects.client.CSI;
+import com.netcraker.project.bd.shared.objects.client.Customer;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 

@@ -1,14 +1,17 @@
-package com.netcraker.project.bd.shared.objects;
+package com.netcraker.project.bd.shared.objects.client;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
+
 
 @Json
 public class TSP extends ObjectBD {
-    private int id;
+
     private double price;
     private Service service;
+    private Tariff tariff;
 
     @Override
     public String toString() {
@@ -18,10 +21,6 @@ public class TSP extends ObjectBD {
                 ", service=" + service +
                 ", tariff=" + tariff +
                 '}';
-    }
-
-    public int getId() {
-        return id;
     }
 
     public double getPrice() {
@@ -49,23 +48,17 @@ public class TSP extends ObjectBD {
     }
 
     public TSP(int id) {
-
-        this.id = id;
+        super(id);
     }
 
     @JsonCreator
     public TSP(@JsonProperty("id") int id,@JsonProperty("price") double price,
                @JsonProperty("service") Service service,@JsonProperty("tariff") Tariff tariff) {
-
-        this.id = id;
+        super(id);
         this.price = price;
         this.service = service;
         this.tariff = tariff;
     }
 
-    public TSP() {
 
-    }
-
-    private Tariff tariff;
 }

@@ -6,7 +6,6 @@ import org.fusesource.restygwt.client.Json;
 
 @Json
 public class Status extends ObjectBD {
-    private int id;
     private int attrId;
     private String text;
 
@@ -19,19 +18,11 @@ public class Status extends ObjectBD {
                 '}';
     }
 
-    public int getId() {
-        return id;
-    }
-
     @JsonCreator
     public Status(@JsonProperty("id") int id, @JsonProperty("attrId") int attrId,@JsonProperty("text") String text) {
-        this.id = id;
+        super(id);
         this.attrId = attrId;
         this.text = text;
-    }
-
-    public Status() {
-
     }
 
     public int getAttrId() {

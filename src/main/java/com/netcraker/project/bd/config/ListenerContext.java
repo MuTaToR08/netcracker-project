@@ -1,7 +1,5 @@
 package com.netcraker.project.bd.config;
 
-import org.glassfish.jersey.servlet.ServletContainer;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

@@ -1,11 +1,11 @@
-package com.netcraker.project.bd.shared.objects;
+package com.netcraker.project.bd.shared.objects.client;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
 @Json
 public class CSI extends ObjectBD {
-    private int id;
     private int status;
     private String start;
     private String end;
@@ -20,10 +20,6 @@ public class CSI extends ObjectBD {
                 ", end=" + end +
                 ", tsp=" + tsp +
                 '}';
-    }
-
-    public int getId() {
-        return id;
     }
 
     public int getStatus() {
@@ -58,30 +54,14 @@ public class CSI extends ObjectBD {
         this.tsp = tsp;
     }
 
-   /// @JsonCreator
-  /*  public CSI(@JsonProperty("id") int id,@JsonProperty("status") int status,
-               @JsonProperty("start") Date start,@JsonProperty("end") Date end,
-               @JsonProperty("tsp") TSP tsp) {
-
-//        this.id = id;
-  //      this.status = status;
-    //    this.start = start;
-      //  this.end = end;
-        //this.tsp = tsp;
-    }*/
     @JsonCreator
     public CSI(@JsonProperty("id") int id,@JsonProperty("status") int status//,
                ,@JsonProperty("start") String start,@JsonProperty("end") String end,
                @JsonProperty("tsp") TSP tsp) {
-
-        this.id = id;
+        super(id);
         this.status = status;
         this.start = (start);
         this.end = (end);
         this.tsp = tsp;
-    }
-
-    public CSI() {
-
     }
 }

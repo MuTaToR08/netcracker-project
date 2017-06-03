@@ -7,8 +7,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.netcraker.project.bd.client.BD;
 import com.netcraker.project.bd.client.api.CustomerApi;
-import com.netcraker.project.bd.shared.objects.CSI;
-import com.netcraker.project.bd.shared.objects.Customer;
+import com.netcraker.project.bd.shared.objects.client.CSI;
+import com.netcraker.project.bd.shared.objects.client.Customer;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 

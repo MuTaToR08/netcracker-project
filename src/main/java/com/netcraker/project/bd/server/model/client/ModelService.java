@@ -1,7 +1,7 @@
-package com.netcraker.project.bd.server.Model.client;
+package com.netcraker.project.bd.server.model.client;
 
 import com.netcraker.project.bd.config.ListenerContext;
-import com.netcraker.project.bd.shared.objects.Service;
+import com.netcraker.project.bd.shared.objects.client.Service;
 
 import javax.servlet.ServletContext;
 import java.sql.Connection;

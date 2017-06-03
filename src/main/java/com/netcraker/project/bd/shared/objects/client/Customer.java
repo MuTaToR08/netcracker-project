@@ -1,7 +1,8 @@
-package com.netcraker.project.bd.shared.objects;
+package com.netcraker.project.bd.shared.objects.client;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
 @Json
@@ -11,8 +12,7 @@ public class Customer extends ObjectBD {
         return getObjName();
     }
 
-    private int id;
-    private int type;
+    //private int type;
     private String fio;
     private int inn;
     private int phone;
@@ -23,16 +23,13 @@ public class Customer extends ObjectBD {
     private double balance;
 
 
-    public int getId() {
-        return id;
-    }
-
     public int getType() {
-        return type;
+        return getObjectType();
     }
 
     public void setType(int type) {
-        this.type = type;
+        //this.type = type;
+        setObjectType(type);
     }
 
     public String getFio() {
@@ -43,14 +40,11 @@ public class Customer extends ObjectBD {
         this.fio = fio;
     }
 
-    public Customer() {
-    }
-
     @Override
     public String toString() {
         return "Customer{" +
                 "id=" + id +
-                ", type=" + type +
+                ", type=" + getObjectType() +
                 ", fio='" + fio + '\'' +
                 ", inn=" + inn +
                 ", phone=" + phone +
@@ -69,8 +63,10 @@ public class Customer extends ObjectBD {
                     @JsonProperty("password") String password,
                     @JsonProperty("tariff") Tariff tariff,@JsonProperty("status") int status,
                     @JsonProperty("balance") double balance) {
-        this.id = id;
-        this.type = type;
+        super(id);
+
+        //this.type = type;
+        setObjectType(type);
         this.fio = fio;
         this.inn = inn;
         this.phone = phone;

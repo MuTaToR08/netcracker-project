@@ -2,10 +2,20 @@ package com.netcraker.project.bd.shared.containers;
 
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 
+
 public class TreeNode {
     private ObjectBD elemnt;
     private TreeNode[] children;
     private boolean visible;
+    private boolean opened;
+
+    public boolean isOpened() {
+        return opened;
+    }
+
+    public void setOpened(boolean opened) {
+        this.opened = opened;
+    }
 
     public boolean isVisible() {
         return visible;
@@ -23,6 +33,7 @@ public class TreeNode {
 
     public TreeNode() {
         visible = true;
+        opened = false;
     }
 
     public TreeNode[] getChildren() {
@@ -41,5 +52,6 @@ public class TreeNode {
     public TreeNode(ObjectBD elemnt) {
 
         this.elemnt = elemnt;
+        opened = false;
     }
 }

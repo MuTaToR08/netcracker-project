@@ -1,16 +1,19 @@
-package com.netcraker.project.bd.server.services.api;
+package com.netcraker.project.bd.server.services.api.client;
 
 import com.netcraker.project.bd.config.ListenerContext;
-import com.netcraker.project.bd.server.Model.ModelCustomer;
-import com.netcraker.project.bd.server.Model.client.ModelTariff;
-import com.netcraker.project.bd.shared.objects.CSI;
-import com.netcraker.project.bd.shared.objects.Customer;
+import com.netcraker.project.bd.server.model.client.ModelCustomer;
+import com.netcraker.project.bd.server.model.client.ModelTariff;
+import com.netcraker.project.bd.shared.objects.client.CSI;
+import com.netcraker.project.bd.shared.objects.client.Customer;
 import com.sun.deploy.util.StringUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.fusesource.restygwt.client.RestService;
 
 import javax.servlet.ServletContext;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import java.sql.Connection;
 import java.sql.ResultSet;

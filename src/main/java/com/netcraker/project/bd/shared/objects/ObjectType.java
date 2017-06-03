@@ -1,17 +1,16 @@
 package com.netcraker.project.bd.shared.objects;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.fusesource.restygwt.client.Json;
 
 @Json
 public class ObjectType extends ObjectBD {
-    private int id;
+
     private String name;
     private String desc;
     private int parent;
 
-    public int getId() {
-        return id;
-    }
 
     @Override
     public String toString() {
@@ -47,16 +46,13 @@ public class ObjectType extends ObjectBD {
         this.parent = parent;
     }
 
-    public ObjectType(int id, String name, String desc, int parent) {
-
-        this.id = id;
+    @JsonCreator
+    public ObjectType(@JsonProperty("id") int id,@JsonProperty("name") String name,
+                      @JsonProperty("desc") String desc,@JsonProperty("parent") int parent) {
+        super(id);
         this.name = name;
         this.desc = desc;
         this.parent = parent;
-    }
-
-    public ObjectType() {
-
     }
 
     @Override

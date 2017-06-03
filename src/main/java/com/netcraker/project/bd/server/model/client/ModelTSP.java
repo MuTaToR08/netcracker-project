@@ -1,7 +1,7 @@
-package com.netcraker.project.bd.server.Model.client;
+package com.netcraker.project.bd.server.model.client;
 
 import com.netcraker.project.bd.config.ListenerContext;
-import com.netcraker.project.bd.shared.objects.TSP;
+import com.netcraker.project.bd.shared.objects.client.TSP;
 
 import javax.servlet.ServletContext;
 import java.sql.Connection;
@@ -16,9 +16,8 @@ public class ModelTSP {
     }
 
 
-    public TSP getTSP(int id)
+    public TSP getById(int id)
     {
-
         TSP tsp = null;
         try {
             ModelTariff modelTariff = new ModelTariff(context);

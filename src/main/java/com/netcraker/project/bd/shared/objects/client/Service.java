@@ -1,13 +1,14 @@
-package com.netcraker.project.bd.shared.objects;
+package com.netcraker.project.bd.shared.objects.client;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
 @Json
 public class Service extends ObjectBD {
-    private int id;
-    private String name;
+
+    //private String name;
     private int view;
     private int type;
     private int period;
@@ -17,7 +18,7 @@ public class Service extends ObjectBD {
     public String toString() {
         return "Service{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + getObjName() + '\'' +
                 ", view=" + view +
                 ", type=" + type +
                 ", period=" + period +
@@ -26,11 +27,13 @@ public class Service extends ObjectBD {
     }
 
     public String getName() {
-        return name;
+        //return name;
+        return getObjName();
     }
 
     public void setName(String name) {
-        this.name = name;
+        //this.name = name;
+        setObjName(name);
     }
 
     public int getView() {
@@ -69,25 +72,17 @@ public class Service extends ObjectBD {
     public Service(@JsonProperty("id") int id,@JsonProperty("name") String name,
                    @JsonProperty("view") int view,@JsonProperty("type") int type,
                    @JsonProperty("period") int period,@JsonProperty("periodType") int periodType) {
-        this.id = id;
-        this.name = name;
+        super(id);
+        //this.name = name;
+        setObjName(name);
         this.view = view;
         this.type = type;
         this.period = period;
         this.periodType = periodType;
     }
 
-    public int getId() {
-        return id;
-    }
-
 
     public Service(int id) {
-
-        this.id = id;
-    }
-
-    public Service() {
-
+        super(id);
     }
 }

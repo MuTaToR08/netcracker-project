@@ -4,6 +4,8 @@ package com.netcraker.project.bd.shared.objects;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.HashMap;
+
 public class ObjectBD implements Named{
 
     protected int id;
@@ -12,6 +14,7 @@ public class ObjectBD implements Named{
     private Integer parentId;
     private int objectType;
 
+    @JsonCreator
     public ObjectBD(@JsonProperty("id") int id) {
         this.id = id;
         parentId = null;
@@ -27,6 +30,20 @@ public class ObjectBD implements Named{
         this.objDesc = objDesc;
         this.parentId = parentId;
         this.objectType = objectType;
+    }
+
+    public ObjectBD(HashMap<String, Object> e) throws Exception {
+        if(!e.containsKey("id"))
+            throw new Exception();
+        id = Integer.valueOf(e.get("id").toString());
+        if(e.containsKey("objName") && e.get("objName") != null)
+            objName = e.get("objName").toString();
+        if(e.containsKey("objDesc")&& e.get("objDesc") != null)
+            objDesc = e.get("objDesc").toString();
+        if(e.containsKey("parentId")&& e.get("parentId") != null)
+            parentId = Integer.valueOf(e.get("parentId").toString());
+        if(e.containsKey("objectType")&& e.get("objectType") != null)
+            objectType = Integer.valueOf(e.get("objectType").toString());
     }
 
     public String getObjDesc() {
@@ -69,6 +86,22 @@ public class ObjectBD implements Named{
     public String getObjectClass()
     {
         return "general";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ObjectBD objectBD = (ObjectBD) o;
+
+        return id == objectBD.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 
     @Override

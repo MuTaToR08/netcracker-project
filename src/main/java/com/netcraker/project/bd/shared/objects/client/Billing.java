@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.HashMap;
+
 @Json
 public class Billing extends ObjectBD {
     private String startDate;
@@ -22,6 +24,10 @@ public class Billing extends ObjectBD {
         this.endDate = endDate;
         this.status = status;
         this.amount = amount;
+    }
+
+    public Billing(HashMap<String, Object> e) throws Exception {
+        super(e);
     }
 
     @Override

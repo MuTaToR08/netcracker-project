@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.HashMap;
+
 @Json
 public class Service extends ObjectBD {
 
@@ -13,6 +15,14 @@ public class Service extends ObjectBD {
     private int type;
     private int period;
     private int periodType;
+
+    public Service(HashMap<String, Object> e) throws Exception {
+        super(e);
+        if(e.containsKey("view") && e.get("view") != null) view = Integer.valueOf(e.get("view").toString());
+        if(e.containsKey("type") && e.get("type") != null) type = Integer.valueOf(e.get("type").toString());
+        if(e.containsKey("period") && e.get("period") != null) period = Integer.valueOf(e.get("period").toString());
+        if(e.containsKey("periodType") && e.get("periodType") != null) periodType =Integer.valueOf(e.get("periodType").toString());
+    }
 
     @Override
     public String toString() {

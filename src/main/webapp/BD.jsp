@@ -1,14 +1,11 @@
+<%@ page pageEncoding="UTF-8" %>
 <!doctype html>
-<!-- The DOCTYPE declaration above will set the    -->
-<!-- browser's rendering engine into               -->
-<!-- "Standards Mode". Replacing this declaration  -->
-<!-- with a "Quirks Mode" doctype may lead to some -->
-<!-- differences in layout.                        -->
-
+<%
+  ServletContext sc = request.getServletContext();
+%>
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-
     <!--                                                               -->
     <!-- Consider inlining CSS to reduce the number of requested files -->
     <!--                                                               -->
@@ -33,6 +30,12 @@
   <!-- to create a completely dynamic UI.        -->
   <!--                                           -->
   <body>
+  <div id="statusList" style="display: none"><%= sc.getAttribute("statusList").toString() %></div>
+  <div id="objectType" style="display: none"><%= sc.getAttribute("objectType").toString() %></div>
+  <script type="text/javascript">
+    window.objectType = <%= sc.getAttribute("objectType").toString() %> ;
+    window.statusList = <%= sc.getAttribute("statusList").toString() %> ;
+  </script>
     <!-- OPTIONAL: include this if you want history support -->
     <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
 

@@ -22,9 +22,12 @@
   <listener>
     <listener-class>com.netcraker.project.bd.config.ListenerContext</listener-class>
   </listener>
+  <listener>
+    <listener-class>com.netcraker.project.bd.config.ListenerBodyContext</listener-class>
+  </listener>
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>BD.html</welcome-file>
+    <welcome-file>BD.jsp</welcome-file>
   </welcome-file-list>
 
 </web-app>

@@ -4,12 +4,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.HashMap;
+
 @Json
 public class CSI extends ObjectBD {
     private int status;
     private String start;
     private String end;
     private TSP tsp;
+
+    public CSI(HashMap<String, Object> e) throws Exception {
+        super(e);
+    }
 
     @Override
     public String toString() {

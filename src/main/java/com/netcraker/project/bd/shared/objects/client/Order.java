@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.HashMap;
+
 @Json
 public class Order extends ObjectBD{
     private String endDate;
@@ -13,6 +15,15 @@ public class Order extends ObjectBD{
     private int status;
     private int type;
     private int csi;
+
+    public Order(HashMap<String, Object> e) throws Exception {
+        super(e);
+        if(e.containsKey("endDate") && e.get("endDate") !=     null) endDate = e.get("endDate").toString();
+        if(e.containsKey("startDate") && e.get("startDate") != null) startDate = e.get("startDate").toString();
+        if(e.containsKey("status") && e.get("status") !=       null) status =Integer.valueOf(e.get("status").toString());
+        if(e.containsKey("type") && e.get("type") !=           null) type = Integer.valueOf(e.get("type").toString());
+        if(e.containsKey("csi") && e.get("csi") !=             null) csi = Integer.valueOf(e.get("csi").toString());
+    }
 
     public int getCsi() {
         return csi;

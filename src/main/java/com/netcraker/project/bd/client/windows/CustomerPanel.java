@@ -18,6 +18,7 @@ import java.util.Map;
 
 
 public class CustomerPanel implements Panels {
+    private final BD mainWindows;
     private final RootPanel main = RootPanel.get("main");
     private final Panel customers = new FlowPanel();
     private final Panel listCustomer = new FlowPanel();
@@ -53,8 +54,8 @@ public class CustomerPanel implements Panels {
 
     private Panel GetCustomerElements(final Customer customer)
     {
-        String status =BD.statuses.get(customer.getStatus()).getText();
         Panel pCustomer = new FlowPanel();
+        String status =mainWindows.statuses.get(customer.getStatus()).getText();
         pCustomer.setStyleName("customer-entity");
         final Panel control = new FlowPanel();
         control.setStyleName("customer-action");
@@ -98,14 +99,14 @@ public class CustomerPanel implements Panels {
                             FlowPanel flow = new FlowPanel();
                             panels.add(flow);
                             flow.setStyleName("csi-flow");
-                            flow.add(new Label(BD.statuses.get(csi.getTsp().getService().getView()).getText()));
+                            flow.add(new Label(BD.getStatuses().get(csi.getTsp().getService().getView()).getText()));
                             flow.add(new Label(csi.getTsp().getService().getName()));
                             flow.add(new Label(DateTimeFormat.getShortDateFormat().format(new Date(csi.getStart()))));
-                            flow.add(new Label(BD.statuses.get(csi.getStatus()).getText()));
+                            flow.add(new Label(BD.getStatuses().get(csi.getStatus()).getText()));
                             flow.add(new Label(String.valueOf(csi.getTsp().getPrice()+" руб.")));
-                            flow.add(new Label(BD.statuses.get(csi.getTsp().getService().getType()).getText()+" "+
+                            flow.add(new Label(BD.getStatuses().get(csi.getTsp().getService().getType()).getText()+" "+
                                     csi.getTsp().getService().getPeriod()+" "+
-                                    BD.statuses.get(csi.getTsp().getService().getPeriodType()).getText()));
+                                    BD.getStatuses().get(csi.getTsp().getService().getPeriodType()).getText()));
                         }
                         //panels.add(new Label(csis));
 
@@ -164,7 +165,7 @@ public class CustomerPanel implements Panels {
         popupDiv.add(new Label("Tariff info"));
         popupDiv.add(new Label("Id:"+customer.getTariff().getId()));
         popupDiv.add(new Label("name:"+customer.getTariff().getTariffName()));
-        popupDiv.add(new Label("Status:"+BD.statuses.get(customer.getTariff().getStatusId()).getText()));
+        popupDiv.add(new Label("Status:"+BD.getStatuses().get(customer.getTariff().getStatusId()).getText()));
         final PopupPanel popupTariff = new PopupPanel();
         popupDiv.setStyleName("customer-tariff-popup");
         popupTariff.add(popupDiv);
@@ -193,6 +194,7 @@ public class CustomerPanel implements Panels {
         block.add(horisontal);
         horisontal.add(pCustomer);
         horisontal.setCellWidth(pCustomer,"50%");
+        horisontal.setCellHeight(pCustomer,"100%");
         horisontal.add(control);
         horisontal.setCellWidth(control,"50%");
         horisontal.setCellHeight(control,"100%");
@@ -212,9 +214,10 @@ public class CustomerPanel implements Panels {
         replaceWindows(main);
     }
 
-    public CustomerPanel()
+    public CustomerPanel( BD link)
     {
         defaultWidget();
+        mainWindows = link;
     }
 
 

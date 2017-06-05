@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.HashMap;
+
 @Json
 public class Floor extends ObjectBD {
     private int num;
@@ -20,6 +22,15 @@ public class Floor extends ObjectBD {
         this.ground = ground;
         this.countRoom = countRoom;
         this.services = services;
+    }
+
+    public Floor(HashMap<String, Object> e) throws Exception {
+        super(e);
+        if(e.containsKey("num") && e.get("num") != null)num = Integer.valueOf(e.get("num").toString());
+        if(e.containsKey("ground") && e.get("ground") != null)ground = Boolean.valueOf(e.get("ground").toString());
+        if(e.containsKey("countRoom") && e.get("countRoom") != null)countRoom = Integer.valueOf(e.get("countRoom").toString());
+        if(e.containsKey("services") && e.get("services") != null)services = Boolean.valueOf(e.get("services").toString());
+
     }
 
     @Override

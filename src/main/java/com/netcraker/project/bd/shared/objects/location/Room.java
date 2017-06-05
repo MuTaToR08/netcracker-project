@@ -3,7 +3,10 @@ package com.netcraker.project.bd.shared.objects.location;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
+import org.apache.tapestry.wml.Do;
 import org.fusesource.restygwt.client.Json;
+
+import java.util.HashMap;
 
 @Json
 public class Room extends ObjectBD {
@@ -18,6 +21,13 @@ public class Room extends ObjectBD {
         this.size = size;
         this.services = services;
         this.closed = closed;
+    }
+
+    public Room(HashMap<String, Object> e) throws Exception {
+        super(e);
+        if(e.containsKey("size") && e.get("size") != null) size= (Double) e.get("size");
+        if(e.containsKey("services") && e.get("services") != null) services =Boolean.valueOf(e.get("services").toString());
+        if(e.containsKey("closed") && e.get("closed") != null) closed = Boolean.valueOf(e.get("closed").toString());
     }
 
     @Override

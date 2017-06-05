@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.HashMap;
+
 @Json
 public class Router extends NetworkHardware {
     private String ip;
@@ -15,6 +17,13 @@ public class Router extends NetworkHardware {
         super(id, role, mac);
         this.ip = ip;
         this.mask = mask;
+    }
+
+    public Router(HashMap<String, Object> e) throws Exception {
+        super(e);
+        if(e.containsKey("ip") && e.get("ip") != null)ip = (e.get("ip").toString());
+        if(e.containsKey("mask") && e.get("mask") != null)mask = (e.get("mask").toString());
+
     }
 
 

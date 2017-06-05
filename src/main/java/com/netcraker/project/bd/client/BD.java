@@ -4,11 +4,13 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.netcraker.project.bd.client.api.StaticObjectApi;
 import com.netcraker.project.bd.client.windows.CustomerPanel;
+import com.netcraker.project.bd.client.windows.TreePanel;
 import com.netcraker.project.bd.shared.objects.ObjectType;
 import com.netcraker.project.bd.shared.objects.Status;
 import org.fusesource.restygwt.client.Defaults;
@@ -32,15 +34,27 @@ public class BD implements EntryPoint {
   public static Map<Integer,ObjectType> types = null;
   static boolean loadStatus = false;
   static boolean loadtype = false;
+    static BD gwtInstance = null;
+    BD()
+    {gwtInstance = this;}
 
-  final CustomerPanel customerPanel = new CustomerPanel();
-  //final TreePanel treePanel = new TreePanel();
+    public static Map<Integer, Status> getStatuses() {
+        return gwtInstance.statuses;
+    }
+
+    public Map<Integer, ObjectType> getTypes() {
+        return gwtInstance.types;
+    }
+
+    final CustomerPanel customerPanel = new CustomerPanel(this);
+  final TreePanel treePanel = new TreePanel();
   final protected RootPanel main = RootPanel.get("main");
 
   protected final RootPanel menuButton = RootPanel.get("menu-buttons");
   
   public void getStaticData()
   {
+
     StaticObjectApi rpcTable = GWT.create(StaticObjectApi.class);
     rpcTable.getAllStatus(new MethodCallback<Map<Integer,Status>>() {
       @Override
@@ -64,7 +78,26 @@ public class BD implements EntryPoint {
         loadtype = true;
       }
     });
+  }//*/
+  /*public static native void getStaticData()/*-{
+      try {
+          obj = new String($wnd.document.getElementById("statusList").textContent);
+          obj1 = new String($wnd.document.getElementById("objectType").textContent);
+         // var a = ();
+      //console.log( @com.google.gwt.core.client.JsonUtils::safeEval(*) (obj));//window.top.statusList));
+      //@com.google.gwt.json.client.JSONParser::parseLenient(obj);
+          //String
+          this.@com.netcraker.project.bd.client.BD::statuses =(@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)( @com.google.gwt.core.client.JsonUtils::safeEval(*) (obj)));;
+
+          //= (@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)( @com.google.gwt.core.client.JsonUtils::safeEval(*) (obj)));
+          this.@com.netcraker.project.bd.client.BD::types = (@com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)( @com.google.gwt.core.client.JsonUtils::safeEval(*) (obj1)));
+
+  } catch(Exception ) {
+        //  console.log(statusList);
   }
+    //  types =  com.google.gwt.json.client.JSONArray(window.top.objectType); // org.fusesource.restygwt.client.AbstractJsonEncoderDecoder.toMap(window.top.objectType,org.fusesource.restygwt.client.AbstractJsonEncoderDecoder.INT, com.netcraker.project.bd.shared.objects.client.Customer_Generated_JsonEncoderDecoder_.INSTANCE, org.fusesource.restygwt.client.Json.Style.DEFAULT);
+
+  }-*/;
 
   /**
    * This is the entry point method.
@@ -72,14 +105,15 @@ public class BD implements EntryPoint {
   public void onModuleLoad() {
     Defaults.setServiceRoot(GWT.getHostPageBaseURL());
     getStaticData();
+    //BD.statuses = .statusList;
+    /*- BD.types = Windows.objectType; -*/
     setDefaultElement();
-
     Timer t = new Timer() {
       public void run() {
         if(loadStatus && loadtype)
         {
-          customerPanel.replaceWindows();
-          customerPanel.refreshData();
+            customerPanel.replaceWindows();
+            customerPanel.refreshData();
           return;
         }
         this.schedule(500);
@@ -94,13 +128,16 @@ public class BD implements EntryPoint {
     MenuBar menuBar = new MenuBar();
     menuBar.addItem(new MenuItem("Заказчики", new Scheduler.ScheduledCommand() {
       @Override
-      public void execute() {}
+      public void execute() {
+          customerPanel.replaceWindows();
+          customerPanel.refreshData();
+      }
     }));
     menuBar.addItem(new MenuItem("Путь", new Scheduler.ScheduledCommand() {
       @Override
       public void execute() {
-        /*treePanel.replaceWindows();
-        treePanel.refreshData();*/
+        treePanel.replaceWindows();
+        treePanel.refreshData();
       }
     }));
     menuBar.addItem(new MenuItem("Здания", new Scheduler.ScheduledCommand() {

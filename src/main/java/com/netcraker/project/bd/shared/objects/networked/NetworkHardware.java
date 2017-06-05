@@ -2,6 +2,8 @@ package com.netcraker.project.bd.shared.objects.networked;
 
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 
+import java.util.HashMap;
+
 abstract class NetworkHardware extends ObjectBD {
     private int role;
     private String mac;
@@ -10,6 +12,13 @@ abstract class NetworkHardware extends ObjectBD {
         super(id);
         this.role = role;
         this.mac = mac;
+    }
+
+    public NetworkHardware(HashMap<String, Object> e) throws Exception {
+        super(e);
+        if(e.containsKey("mac") && e.get("mac") != null)mac = (e.get("mac").toString());
+        if(e.containsKey("role") && e.get("role") != null)role = Integer.valueOf(e.get("role").toString());
+
     }
 
     public int getRole() {

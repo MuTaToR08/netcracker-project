@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.HashMap;
+
 @Json
 public class Stand  extends ObjectBD{
     private String size;
@@ -15,6 +17,13 @@ public class Stand  extends ObjectBD{
         super(id);
         this.size = size;
         this.slots = slots;
+    }
+
+    public Stand(HashMap<String, Object> e) throws Exception {
+        super(e);
+        if(e.containsKey("size") && e.get("size") != null)size = e.get("size").toString();
+        if(e.containsKey("slots") && e.get("slots") != null) slots = Integer.valueOf(e.get("slots").toString());
+
     }
 
     @Override

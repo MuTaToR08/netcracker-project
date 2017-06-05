@@ -23,6 +23,10 @@ public class ServiceStaticObject implements RestService {
     @Context
     private ServletContext context;
 
+    public void setContext(ServletContext context) {
+        this.context = context;
+    }
+
     static protected Map<Integer,Status> statuses = null;
     static protected Map<Integer,ObjectType> objects = null;
 

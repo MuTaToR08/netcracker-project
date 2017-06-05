@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.HashMap;
+
 @Json
 public class Tariff extends ObjectBD {
     //private String tariffName;
@@ -12,6 +14,11 @@ public class Tariff extends ObjectBD {
 
     public Tariff(int tariffId) {
         super(tariffId);
+    }
+
+    public Tariff(HashMap<String, Object> e) throws Exception {
+        super(e);
+        if(e.containsKey("statusId") && e.get("statusId") != null)statusId = Integer.valueOf(e.get("statusId").toString());
     }
 
     @Override

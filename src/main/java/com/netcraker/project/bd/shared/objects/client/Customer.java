@@ -5,8 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.HashMap;
+
 @Json
 public class Customer extends ObjectBD {
+    public Customer(HashMap<String, Object> e) throws Exception {
+        super(e);
+    }
+
     @Override
     public String publicName() {
         return getObjName();

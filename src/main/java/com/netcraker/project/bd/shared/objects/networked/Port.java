@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.HashMap;
+
 @Json
 public class Port extends ObjectBD {
     private int num;
@@ -19,6 +21,14 @@ public class Port extends ObjectBD {
         this.num = num;
         this.enable = enable;
         this.type = type;
+    }
+
+    public Port(HashMap<String, Object> e) throws Exception {
+        super(e);
+        if(e.containsKey("num") && e.get("num") != null) num = Integer.valueOf(e.get("num").toString());
+        if(e.containsKey("type") && e.get("type") != null)type = Integer.valueOf(e.get("type").toString());
+        if(e.containsKey("enable") && e.get("enable") != null)enable = Boolean.valueOf(e.get("enable").toString());
+
     }
 
     @Override

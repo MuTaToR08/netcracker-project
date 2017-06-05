@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.HashMap;
+
 @Json
 public class Stock extends ObjectBD {
     private int number;
@@ -17,9 +19,25 @@ public class Stock extends ObjectBD {
         this.size = size;
     }
 
-    public int getNumber() {
+    public Stock(HashMap<String, Object> e) throws Exception {
+        super(e);
+        if(e.containsKey("number") && e.get("number") != null)
+            number = Integer.valueOf(e.get("number").toString());
+        if(e.containsKey("size") && e.get("size") != null)
+            size = (Double) e.get("size");
 
+    }
+
+    public int getNumber() {
         return number;
+    }
+
+    @Override
+    public String toString() {
+        return "Stock{" +
+                "number=" + number +
+                ", size=" + size +
+                '}';
     }
 
     public void setNumber(int number) {
@@ -28,15 +46,6 @@ public class Stock extends ObjectBD {
 
     public double getSize() {
         return size;
-    }
-
-    @Override
-    public String toString() {
-        return "Stock{" +
-                "id=" + id +
-                "number=" + number +
-                ", size=" + size +
-                '}';
     }
 
     public void setSize(double size) {

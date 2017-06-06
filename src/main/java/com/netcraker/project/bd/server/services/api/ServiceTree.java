@@ -35,6 +35,10 @@ public class ServiceTree implements RestService {
         return (List<Object>) new FactoryObjectsBD(context).getChields(id);
     }
 
+
+
+
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("children/")

@@ -1,5 +1,6 @@
 package com.netcraker.project.bd.client.api;
 
+import com.google.gwt.dev.util.collect.HashMap;
 import com.netcraker.project.bd.shared.objects.ObjectType;
 import com.netcraker.project.bd.shared.objects.Status;
 import org.fusesource.restygwt.client.MethodCallback;
@@ -14,7 +15,7 @@ public interface StaticObjectApi extends RestService {
 
     @GET
     @Path("status")
-    void getAllStatus(MethodCallback<Map<Integer,Status>> status);
+    void getAllStatus(MethodCallback<HashMap<Integer,Status>> status);
 
     @GET
     @Path("types")

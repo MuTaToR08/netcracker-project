@@ -83,6 +83,10 @@ public class Customer extends ObjectBD {
         this.balance = balance;
     }
 
+    @Override
+    public String getObjectClass() {
+        return "customer";
+    }
 
     public int getInn() {
         return inn;

@@ -2,6 +2,7 @@ package com.netcraker.project.bd.shared.objects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gwt.json.client.JSONObject;
 import org.fusesource.restygwt.client.Json;
 
 @Json
@@ -9,6 +10,12 @@ public class Status {
     private int id;
     private int attrId;
     private String text;
+
+    public Status(JSONObject object) {
+        id = Integer.valueOf(object.get("id").isNumber().toString());
+        attrId = Integer.valueOf(object.get("attrId").isNumber().toString());
+        text =  object.get("text").isString().toString();
+    }
 
     @Override
     public String toString() {

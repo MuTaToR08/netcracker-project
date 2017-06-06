@@ -1,10 +1,9 @@
 package com.netcraker.project.bd.client;
 
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.*;
+import com.google.gwt.dev.util.collect.HashMap;
+import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -30,38 +29,43 @@ public class BD implements EntryPoint {
   private static final String SERVER_ERROR = "An error occurred while "
       + "attempting to contact the server. Please check your network "
       + "connection and try again.";
-  public static Map<Integer,Status> statuses = null;
-  public static Map<Integer,ObjectType> types = null;
+  public static Map<Integer, Status> statuses = null;
+
+    public static Map<Integer,ObjectType> types = null;
   static boolean loadStatus = false;
   static boolean loadtype = false;
     static BD gwtInstance = null;
-    BD()
-    {gwtInstance = this;}
+    //BD()
+  //  {gwtInstance = this;}
 
     public static Map<Integer, Status> getStatuses() {
         return gwtInstance.statuses;
     }
 
-    public Map<Integer, ObjectType> getTypes() {
-        return gwtInstance.types;
-    }
+   // public Map<Integer, ObjectType> getTypes() {
+    //    return gwtInstance.types;
+    //}
 
     final CustomerPanel customerPanel = new CustomerPanel(this);
   final TreePanel treePanel = new TreePanel();
   final protected RootPanel main = RootPanel.get("main");
 
   protected final RootPanel menuButton = RootPanel.get("menu-buttons");
-  
+
+
+
   public void getStaticData()
   {
-
+      BD.statuses =  GeneralUtils.toMapStatus(RootPanel.get("statusList").getElement().getInnerText());
+      BD.types =  GeneralUtils.toMapObjects(RootPanel.get("objectType").getElement().getInnerText());
+    /*  GWT.log(BD.statuses.toString());
     StaticObjectApi rpcTable = GWT.create(StaticObjectApi.class);
-    rpcTable.getAllStatus(new MethodCallback<Map<Integer,Status>>() {
+    rpcTable.getAllStatus(new MethodCallback<HashMap<Integer,Status>>() {
       @Override
       public void onFailure(Method method, Throwable throwable) {}
 
       @Override
-      public void onSuccess(Method method, Map<Integer,Status> stats) {
+      public void onSuccess(Method method, HashMap<Integer,Status> stats) {
         BD.statuses = stats;
         loadStatus = true;
       }
@@ -77,7 +81,7 @@ public class BD implements EntryPoint {
         BD.types = typess;
         loadtype = true;
       }
-    });
+    });*/
   }//*/
   /*public static native void getStaticData()/*-{
       try {
@@ -105,21 +109,9 @@ public class BD implements EntryPoint {
   public void onModuleLoad() {
     Defaults.setServiceRoot(GWT.getHostPageBaseURL());
     getStaticData();
-    //BD.statuses = .statusList;
-    /*- BD.types = Windows.objectType; -*/
     setDefaultElement();
-    Timer t = new Timer() {
-      public void run() {
-        if(loadStatus && loadtype)
-        {
-            customerPanel.replaceWindows();
-            customerPanel.refreshData();
-          return;
-        }
-        this.schedule(500);
-      }
-    };
-    t.schedule(500);
+      customerPanel.replaceWindows();
+      customerPanel.refreshData();
 
 
   }

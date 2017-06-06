@@ -111,7 +111,7 @@ public class ObjectBD implements Named{
 
     public String getHtmlUl()
     {
-        return id+"|"+objName+"|"+objDesc+"|"+objectType+"|"+parentId;
+        return id+"|"+publicName()+"|"+objDesc+"|"+objectType+"|"+parentId;
     }
 
     @Override

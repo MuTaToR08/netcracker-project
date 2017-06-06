@@ -119,3 +119,11 @@
 .tree-ul-li .tree-room:hover::after {
     content: "Комната";
 }
+
+.tree-ul-li .tree-customer::before
+{
+    background: white url(/img/icon/customer.png) no-repeat;
+}
+.tree-ul-li .tree-customer:hover::after {
+    content: "Заказчик";
+}

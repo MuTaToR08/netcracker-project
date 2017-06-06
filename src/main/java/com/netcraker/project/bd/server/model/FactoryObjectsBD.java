@@ -3,10 +3,7 @@ package com.netcraker.project.bd.server.model;
 import com.netcraker.project.bd.config.ListenerContext;
 import com.netcraker.project.bd.server.model.client.*;
 import com.netcraker.project.bd.server.model.location.*;
-import com.netcraker.project.bd.server.model.networked.ModelCarrier;
-import com.netcraker.project.bd.server.model.networked.ModelPort;
-import com.netcraker.project.bd.server.model.networked.ModelRouter;
-import com.netcraker.project.bd.server.model.networked.ModelSwitch;
+import com.netcraker.project.bd.server.model.networked.*;
 import com.netcraker.project.bd.shared.containers.SimpleContainer;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 
@@ -81,78 +78,78 @@ public class FactoryObjectsBD {
     public SimpleContainer<? super ObjectBD> getObject(int objectId, int type)
     {
         SimpleContainer<? super ObjectBD> ret = new SimpleContainer<>();
-        switch (type)
-        {
-            case 1://Здание
+        TypeName typeName = TypeName.forType(type);
+        switch (typeName){
+            case BUILDING://Здание
                 ret.setData(new ModelBuilding(context).getById(objectId));
                 break;
-            case 2://Этаж
+            case FLOOR://Этаж
                 ret.setData(new ModelFloor(context).getById(objectId));
                 break;
-            case 3://Комната
+            case ROOM://Комната
                 ret.setData(new ModelRoom(context).getById(objectId));
                 break;
-            case 4://Стойка
+            case STAND://Стойка
                 ret.setData(new ModelStand(context).getById(objectId));
                 break;
-            ////case 5://Оборудование
-            ////case 6://Железо
-            //case 7://Материнская плата
-            //case 8://ОЗУ
-            //case 9://Процессор
-            //case 10://Видеокарта
-            //case 11://Блок питания
-            //case 12://Жёсткий диск
-            //case 13://SSD
-            //case 14://ПК
-            case 15://Провод Carrier
+            ////case EQUIPMENT://Оборудование
+            ////case HARDWARE://Железо
+            //case MOTHERBOARD://Материнская плата
+            //case MEMORY://ОЗУ
+            //case CPU://Процессор
+            //case GPU://Видеокарта
+            //case POWER://Блок питания
+            //case HDD://Жёсткий диск
+            //case SSD://SSD
+            //case PC://ПК
+            case CARRIER://Провод Carrier
                 ret.setData(new ModelCarrier(context).getById(objectId));
                 break;
-            case 16://Комутатор
+            case SWITCH://Комутатор
                 ret.setData(new ModelSwitch(context).getById(objectId));
                 break;
-            case 17://Маршрутизатор
+            case ROUTER://Маршрутизатор
                 ret.setData(new ModelRouter(context).getById(objectId));
                 break;
-            ////case 18://Устройство хранения
-            ////case 19://Локация
-            //case 20://Сетевая карта
-            ////case 21://Сетевое оборудование
-            //case 24://Сервер
-            //case 25://Неуправляемый комутатор
-            //case 26://Управляемый комутатор
-            //case 27://настраиваемый комутатор
-            case 28://Порт
+            ////case STORAGE://Устройство хранения
+            ////case LOCATION://Локация
+            //case NETWORK_CARD://Сетевая карта
+            ////case NETWORKED://Сетевое оборудование
+            //case SERVER://Сервер
+            //case SWITCH_NO_CONTROL://Неуправляемый комутатор
+            //case SWITCH_CONTORL://Управляемый комутатор
+            //case SWITCH_SETTING://настраиваемый комутатор
+            case PORT://Порт
                 ret.setData(new ModelPort(context).getById(objectId));
                 break;
-            case 29://Заказ
+            case ORDER://Заказ
                 ret.setData(new ModelOrder(context).getById(objectId));
                 break;
-            case 30://Заказчик
+            case CUSTOMER://Заказчик
                 ret.setData(new ModelCustomer(context).getById(objectId));
                 break;
-            case 31://Услуга(сервис)
+            case SERVICE://Услуга(сервис)
                 ret.setData(new ModelService(context).getById(objectId));
                 break;
-            case 32://Тариф
+            case TARIFF://Тариф
                 ret.setData(new ModelTariff(context).getById(objectId));
                 break;
-            case 33://Оказание услуги(SCI)
+            case CSI://Оказание услуги(SCI)
                 ret.setData(new ModelCSI(context).getById(objectId));
                 break;
-            case 34://Операции по счёту(billing)
+            case BILLING://Операции по счёту(billing)
                 ret.setData(new ModelBilling(context).getById(objectId));
                 break;
-            case 35://Цена (TSP)
+            case TSP://Цена (TSP)
                 ret.setData(new ModelTSP(context).getById(objectId));
                 break;
-            case 39://Хранилище
+            case STOCK://Хранилище
                 ret.setData(new ModelStock(context).getById(objectId));
                 break;
-            case 40://Доп хранилища(для тестироваия)
-                ////case 42://Соеденительное
-        }
+            //case NEW_STAGE://Доп хранилища(для тестироваия)
+                ////case CONNECTING://Соеденительное
 
+        }
         return ret;
     }
 }

@@ -21,7 +21,11 @@ public class TSP extends ObjectBD {
         if(e.containsKey("price") && e.get("price") != null)price = (Double)(e.get("price"));
         service = new Service(e);
         tariff = new Tariff(e);
+    }
 
+    @Override
+    public String getObjectClass() {
+        return "tsp";
     }
 
     @Override

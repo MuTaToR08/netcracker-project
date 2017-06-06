@@ -91,6 +91,10 @@ public class Service extends ObjectBD {
         this.periodType = periodType;
     }
 
+    @Override
+    public String getObjectClass() {
+        return "service";
+    }
 
     public Service(int id) {
         super(id);

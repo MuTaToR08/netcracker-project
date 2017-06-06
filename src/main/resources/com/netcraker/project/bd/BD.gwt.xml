@@ -19,5 +19,7 @@
   <!-- Specify the paths for translatable code                    -->
   <source path='client' />
   <source path='shared' />
+  <stylesheet src="/tree.css" />
+  <public path="src/main/webapp/img"/>
 
 </module>

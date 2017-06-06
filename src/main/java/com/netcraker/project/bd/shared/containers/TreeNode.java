@@ -45,7 +45,7 @@ public class TreeNode {
 
     public TreeNode() {
         visible = true;
-        opened = false;
+        opened = true;
     }
 
     public List<TreeNode> getChildren() {
@@ -64,13 +64,13 @@ public class TreeNode {
     }
     public TreeNode addChildren(ObjectBD add)
     {
-        TreeNode tmp = null;
-        if(!children.contains(add)){
+        TreeNode tmp = new TreeNode(add);
+        if(!children.contains(tmp)){
             tmp = new TreeNode(add);
             children.add(tmp);
         }else
         {
-            tmp = children.get(children.indexOf(add));
+            tmp = children.get(children.indexOf(tmp));
         }
         return tmp;
     }
@@ -78,6 +78,7 @@ public class TreeNode {
 
         this.elemnt = (elemnt);
         opened = false;
+        visible = true;
     }
 
     @Override
@@ -97,7 +98,7 @@ public class TreeNode {
     }
 
     public void addChildren(SimpleContainer<? super ObjectBD> add) {
-        if(!children.contains(add))
+        if(!children.contains(add.getData()))
             children.add(new TreeNode(add));
     }
 }

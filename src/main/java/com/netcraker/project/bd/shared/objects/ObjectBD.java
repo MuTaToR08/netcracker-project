@@ -17,7 +17,10 @@ public class ObjectBD implements Named{
     @JsonCreator
     public ObjectBD(@JsonProperty("id") int id) {
         this.id = id;
-        parentId = null;
+        parentId = 0;
+        objectType = 0;
+        objDesc = "";
+        objName = "";
     }
     //public ObjectBD() {
    // }
@@ -38,12 +41,20 @@ public class ObjectBD implements Named{
         id = Integer.valueOf(e.get("id").toString());
         if(e.containsKey("objName") && e.get("objName") != null)
             objName = e.get("objName").toString();
+        else
+            objName = "";
         if(e.containsKey("objDesc")&& e.get("objDesc") != null)
             objDesc = e.get("objDesc").toString();
+        else
+            objDesc = "";
         if(e.containsKey("parentId")&& e.get("parentId") != null)
             parentId = Integer.valueOf(e.get("parentId").toString());
+        else
+            parentId = 0;
         if(e.containsKey("objectType")&& e.get("objectType") != null)
             objectType = Integer.valueOf(e.get("objectType").toString());
+        else
+            objectType = 0;
     }
 
     public String getObjDesc() {
@@ -91,12 +102,16 @@ public class ObjectBD implements Named{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null) return false;
 
         ObjectBD objectBD = (ObjectBD) o;
 
         return id == objectBD.id;
+    }
 
+    public String getHtmlUl()
+    {
+        return id+"|"+objName+"|"+objDesc+"|"+objectType+"|"+parentId;
     }
 
     @Override

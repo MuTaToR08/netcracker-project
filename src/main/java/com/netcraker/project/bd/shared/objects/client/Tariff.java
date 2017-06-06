@@ -22,6 +22,11 @@ public class Tariff extends ObjectBD {
     }
 
     @Override
+    public String getObjectClass() {
+        return "tariff";
+    }
+
+    @Override
     public String toString()
     {
 //        return tariffName;

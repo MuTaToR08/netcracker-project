@@ -1,11 +1,12 @@
 package com.netcraker.project.bd.client.windows;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.builder.shared.UListBuilder;
+import com.google.gwt.dom.client.UListElement;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.IntegerBox;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.*;
 import com.netcraker.project.bd.client.api.TreeApi;
 import com.netcraker.project.bd.shared.containers.SimpleContainer;
 import com.netcraker.project.bd.shared.containers.TreeNode;
@@ -41,7 +42,8 @@ public class TreePanel implements Panels {
         replaced.clear();
     }
 
-    private ObjectBD createObject(HashMap<String, Object> e) {
+    private ObjectBD createObject(Object e1) {
+        HashMap<String, Object> e = (HashMap<String, Object>) e1;
         try {
             switch (Integer.valueOf(e.get("objectType").toString())) {
                 case 1://Здание
@@ -76,17 +78,152 @@ public class TreePanel implements Panels {
                     return new TSP(e);
                 case 39://Хранилище
                     return new Stock(e);
+                default:
+                    Window.alert(e.get("objectType").toString());
             }
-        } catch (Exception e1) {
+        } catch (Exception e2) {
         }
         return null;
     }
 
+    public void makeupTree(TreeNode node,Panel panel)
+    {
+        FlowPanel ul = new FlowPanel();
+        ul.setStyleName("tree-ul");
+        for (TreeNode treeNode : node.getChildren()) {
+            if(!treeNode.isVisible())
+                continue;
+            FlowPanel li = new FlowPanel();
+            FlowPanel data = new FlowPanel();
+            FlowPanel treeflow = new FlowPanel();
+            ul.setStyleName("tree-ul-li");
+            Widget html = new HTML(treeNode.getElemnt().getHtmlUl());
+            html.setStyleName("tree-"+treeNode.getElemnt().getObjectClass());
+            html.addStyleName("tree-element");
+            html.getElement().setAttribute("data-id",String.valueOf(treeNode.getElemnt().getId()));
+            html.addDomHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent clickEvent) {
+                    TreeApi treeApi = GWT.create(TreeApi.class);
+                    final int id = Integer.valueOf(clickEvent.getRelativeElement().getAttribute("data-id"));
+                    treeApi.getChilds(id, new MethodCallback<List<Object>>() {
+                        @Override
+                        public void onFailure(Method method, Throwable throwable) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(Method method, List<Object> objects) {
+                            addToTree(id,objects);
+                            hideNonClock(id,tree);
+                            makeupTree();
+                        }
+                    });
+                }
+            }, ClickEvent.getType());
+
+            data.add(html);
+            data.add(new Button("visible", new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent clickEvent) {
+
+                }
+            }));
+            li.add(data);
+            data.setStyleName("info");
+            treeflow.setStyleName("children");
+            if(treeNode.getChildren().size() > 0)
+            {
+                li.add(treeflow);
+                makeupTree(treeNode,treeflow);
+            }
+            ul.add(li);
+        }
+        panel.add(ul);
+    }
+
+    private Boolean hideNonClock(int id, TreeNode node) {
+        Boolean ret = false;
+        Boolean curRet = false;
+        for (TreeNode treeNode : node.getChildren()) {
+            ret = hideNonClock(id,treeNode);
+            if(!ret && treeNode.getElemnt().getId()==id) {
+                ret = true;
+                for(TreeNode treeNode1 : treeNode.getChildren())
+                {
+                    treeNode1.setVisible(true);
+                }
+            }
+            if(ret)
+            {
+                curRet = true;
+                treeNode.setVisible(true);
+
+            }
+            else
+            {
+                treeNode.setVisible(false);
+            }
+        }
+        /*for (TreeNode treeNode : node.getChildren()){
+
+            if(curRet == treeNode.getElemnt().getId()) {
+                visible(id, treeNode, true);
+                treeNode.setVisible(true);
+            }
+            else {
+                treeNode.setVisible(false);
+                visible(id, treeNode, false);
+            }
+        }*/
+        return curRet;
+    }
+
+    void visible(int id,TreeNode node, Boolean set)
+    {
+        for(TreeNode treeNode : node.getChildren())
+        {
+            if(set)
+            {
+                treeNode.setVisible(true);
+                visible(id,treeNode,set);
+                continue;
+            }
+            if(treeNode.getElemnt().getId() != id)
+            {
+                treeNode.setVisible(false);
+            }else
+            {
+                treeNode.setVisible(true);
+                visible(id,treeNode,true);
+            }
+        }
+    }
+
+    public void makeupTree()
+    {
+        main.clear();
+        makeupTree(tree,main);
+    }
+
+    void addToTree(int id,List<Object> objects)
+    {
+        for (Object object : objects) {
+            ObjectBD tmp = createObject(object);
+            if (tmp == null)
+                continue;
+            TreeNode node = addToNode(id,tmp);
+            allObject.put(tmp.getId(),node);
+        }
+    }
+
     @Override
     public void refreshData() {
-
+        tree.getChildren().clear();
+        allObject.clear();
         TreeApi treeApi = GWT.create(TreeApi.class);
-        treeApi.getChilds(0, new MethodCallback<List<Object>>() {
+        final int idGet = 0;
+        treeApi.getChilds(idGet, new MethodCallback<List<Object>>() {
             @Override
             public void onFailure(Method method, Throwable throwable) {
 
@@ -94,44 +231,17 @@ public class TreePanel implements Panels {
 
             @Override
             public void onSuccess(Method method, List<Object> objects) {
-                for (Object object : objects) {
-                    /*Window.alert*/
-                    HashMap<String, Object> e = (HashMap<String, Object>) object;
-                    ObjectBD tmp = createObject(e);
-                    if (tmp == null)
-                        continue;
-                    allObject.put(tmp.getId(),tree.addChildren(tmp));
-//                    Window.alert(e.get("objectType").getClass().getName());
-
-                }
-                for (int i = 0; i < tree.getChildren().size(); i++) {
-                    Window.alert((tree.getChildren().get(i).getElemnt()).toString());
-                }
-                /*List<TreeNode> child = tree.getChildren();
-
-
-                for (int i = 0; i < tree.getChildren().size(); i++) {
-                    Window.alert(tree.getChildren().get(i).getElemnt().toString());
-                }*/
-
-                //Window.alert(objects.toString());
+                addToTree(idGet,objects);
+                makeupTree();
             }
         });
-        //Window.alert(list.toString());
-/*
-        treeApi.getChilds(0, new MethodCallback<List<? super ObjectBD>>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
+    }
+    private  TreeNode addToNode(int idGet,ObjectBD tmp)
+    {
+        if(idGet == 0)
+            return tree.addChildren(tmp);
 
-            }
-
-            @Override
-            public void onSuccess(Method method, List<? super ObjectBD> objects) {
-                for (Object object : objects) {
-                    Window.alert(object.toString());
-                }
-            }
-        });*/
+        return allObject.get(idGet).addChildren(tmp);
     }
 
     public TreePanel() {

@@ -35,7 +35,7 @@ public class FactoryObjectsBD {
         try {
             st = cn.createStatement();
 
-            ResultSet rs = st.executeQuery("SELECT * FROM objects WHERE container_id " + (id==0?"is null":" = "+id) + "");
+            ResultSet rs = st.executeQuery("SELECT * FROM objects WHERE container_id " + (id==0?"is null":" = "+id) + " ORDER BY object_type_id,object_id");
 
             while (rs.next())
             {
@@ -127,6 +127,7 @@ public class FactoryObjectsBD {
                 break;
             case 29://Заказ
                 ret.setData(new ModelOrder(context).getById(objectId));
+                break;
             case 30://Заказчик
                 ret.setData(new ModelCustomer(context).getById(objectId));
                 break;

@@ -41,7 +41,7 @@ public class ModelPort implements DefaultMethod<Port>{
 
     @Override
     public Port createObject(ResultSet rs) throws SQLException {
-        return new Port(rs.getInt("portID"),rs.getInt("num"),rs.getBoolean("enable"),rs.getInt("typePort"));
+        return new Port(rs.getInt("portID"),rs.getInt("num"),rs.getBoolean("enabled"),rs.getInt("typePort"));
     }
 
     @Override

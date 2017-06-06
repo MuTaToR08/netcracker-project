@@ -46,6 +46,12 @@ public class Building extends ObjectBD {
                 '}';
     }
 
+    @Override
+    public String getHtmlUl() {
+
+        return super.getHtmlUl();
+    }
+
     @JsonCreator
     public Building(@JsonProperty("id") int id,@JsonProperty("lat") double lat,@JsonProperty("lon") double lon,
                     @JsonProperty("countFloor")int countFloor,@JsonProperty("countFloorGround") int countFloorGround,
@@ -95,5 +101,5 @@ public class Building extends ObjectBD {
     }
 
     @Override
-    public String getObjectClass(){return "Building";}
+    public String getObjectClass(){return "building";}
 }

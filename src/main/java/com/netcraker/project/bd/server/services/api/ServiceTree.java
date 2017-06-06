@@ -29,9 +29,18 @@ public class ServiceTree implements RestService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("children/{id:0}")
-    public List<? super ObjectBD> getChildes(@PathParam("id") int id)
+    @Path("children/{id}")
+    public List<Object> getChildes(@PathParam("id") int id)
     {
-        return new FactoryObjectsBD(context).getChields(id);
+        return (List<Object>) new FactoryObjectsBD(context).getChields(id);
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("children/")
+    public List<Object> getChildes()
+    {
+        return getChildes(0);
+    }
+
 }

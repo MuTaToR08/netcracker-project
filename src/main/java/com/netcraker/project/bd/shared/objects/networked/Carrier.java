@@ -7,7 +7,6 @@ import com.google.gwt.user.client.Window;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,11 +46,12 @@ public class Carrier extends ObjectBD {
                 locations[i] = Integer.valueOf(p.get(i).toString());
             }
         }
-        //if(e.containsKey("locations") && e.get("locations") != null)locations = (e.get("locations").toString());
-        //if(e.containsKey("") && e.get("") != null) = (e.get("").toString());
-
     }
 
+    @Override
+    public String getObjectClass() {
+        return "carrier";
+    }
 
     public int getType() {
         return type;

@@ -28,6 +28,8 @@ public class ModelTariff {
 
             while(rs.next()) {
                 tariff = new Tariff(rs.getInt("tariffId"), rs.getString("tariffName"), rs.getInt("statusid"));
+                tariff.setObjectType(rs.getInt("typeId"));
+                tariff.setParentId(rs.getInt("o_parent"));
             }
 
             st.close();

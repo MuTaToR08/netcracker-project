@@ -34,6 +34,11 @@ public class Floor extends ObjectBD {
     }
 
     @Override
+    public String getObjectClass() {
+        return "floor";
+    }
+
+    @Override
     public String toString() {
         return "Floor{" +
                 "id=" + id +

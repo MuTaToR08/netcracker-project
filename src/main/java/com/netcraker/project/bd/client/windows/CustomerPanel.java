@@ -34,6 +34,7 @@ public class CustomerPanel implements Panels {
 
     public void refreshData()
     {
+        listCustomer.clear();
         CustomerApi RPC = GWT.create(CustomerApi.class);
         RPC.getAll(new MethodCallback<Map<Integer, Customer>>() {
             @Override

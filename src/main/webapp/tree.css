@@ -1,0 +1,121 @@
+.tree-ul
+{
+    padding-left: 10px;
+}
+
+.tree-ul-li
+{
+    margin-left: 20px;
+}
+
+.tree-ul-li > div
+{
+    margin-bottom: 2px;
+}
+.tree-ul-li .info
+{
+    padding-left: 10px;
+    padding-top: 3px;
+    min-height: 35px;
+    background: white;
+    line-height: 35px;
+    display: inline-flex;
+    padding-right: 25px;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.tree-ul-li .tree-element::after
+{
+    position: absolute;
+    left: 100%;
+    top: 0;
+    z-index: 1;
+    background: rgba(255,255,230,0.9);
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    line-height: 11px;
+    padding: 8px 8px;
+    border-radius: 10px;
+    border: 1px solid #333;
+}
+
+.tree-ul-li .tree-element::before
+{
+    display: inline-block;
+    content: ' ';
+    width: 25px;
+    height: 25px;
+    float: left;
+    margin-right: 5px;
+    position: relative;
+}
+
+
+.tree-ul-li .tree-building::before
+{
+    background: white url(/img/icon/building.png) no-repeat;
+}
+
+.tree-ul-li .tree-building:hover::after {
+    content: "Здание"; /* Выводим текст */
+
+}
+
+.tree-ul-li .tree-service::before
+{
+    background: white url(/img/icon/service.png) no-repeat;
+}
+
+.tree-ul-li .tree-service:hover::after {
+    content: "Сервис"; /* Выводим текст */
+}
+
+.tree-ul-li .tree-tariff::before
+{
+    background: white url(/img/icon/tariff.png) no-repeat;
+}
+.tree-ul-li .tree-tariff:hover::after {
+    content: "Тариф";
+}
+
+.tree-ul-li .tree-tsp::before
+{
+    background: white url(/img/icon/tsp.png) no-repeat;
+}
+.tree-ul-li .tree-tsp:hover::after {
+    content: "TSP";
+}
+
+.tree-ul-li .tree-carrier::before
+{
+    background: white url(/img/icon/carrier.png) no-repeat;
+}
+.tree-ul-li .tree-carrier:hover::after {
+    content: "TSP";
+}
+
+.tree-ul-li .tree-floor::before
+{
+    background: white url(/img/icon/floor.png) no-repeat;
+}
+.tree-ul-li .tree-floor:hover::after {
+    content: "Этаж";
+}
+
+.tree-ul-li .tree-stock::before
+{
+    background: white url(/img/icon/stock.png) no-repeat;
+}
+.tree-ul-li .tree-stock:hover::after {
+    content: "Хранилище";
+}
+
+.tree-ul-li .tree-room::before
+{
+    background: white url(/img/icon/room.png) no-repeat;
+}
+.tree-ul-li .tree-room:hover::after {
+    content: "Комната";
+}

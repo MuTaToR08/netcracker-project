@@ -52,15 +52,28 @@ public class ModelCustomer {
         try {
             Connection cn = ListenerContext.getDBOracle(context);
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery ("SELECT csiId,statusId,(dateEnd) dateEnd," +
-                    "(dateStart) dateStart,tspId,typeId,o_name,o_parent FROM TABLE(GETOBJECTS.CUSTOMER("+customerId+"))");
+            /*customerId objects.object_id%TYPE, --привязка к типу поля empinfo
+typeId objects.object_type_id%TYPE,
+fio params.string%TYPE,
+inn params.numb%TYPE,
+phone params.numb%TYPE,
+login params.string%TYPE,
+password params.string%TYPE,
+tariffId objects.object_id%TYPE,
+status params.numb%TYPE,
+balance number,
+addDate date*/
+            ResultSet rs = st.executeQuery ("SELECT * FROM TABLE(CUSTUMER.GetCustomer("+customerId+"))");
             rs.next();
+            ret  = new Customer(rs.getInt("customerId"),rs.getInt("typeId"),rs.getString("fio"),rs.getInt("inn"),
+                    rs.getInt("phone"),rs.getString("login"),rs.getString("password"),
+                    new ModelTariff(context).getById( rs.getInt("tariffId")),rs.getInt("status"),rs.getDouble("balance"));
             // CSI csi = new CSI(rs.getInt("csiId"),rs.getInt("statusID"),
             //    rs.getString("dateStart"),rs.getString("dateEnd"),modelTSP.getTSP(rs.getInt("tspId"))
             // );
             // csi.setObjectType(rs.getInt("typeId"));
             // csi.setObjName(rs.getString("o_name"));
-            // csi.setParentId(rs.getInt("o_parent"));
+            ret.setParentId(rs.getInt("o_parent"));
 
 
             st.close();
@@ -68,6 +81,6 @@ public class ModelCustomer {
         catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return ret;
     }
 }

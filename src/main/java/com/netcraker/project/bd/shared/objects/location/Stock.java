@@ -28,6 +28,11 @@ public class Stock extends ObjectBD {
 
     }
 
+    @Override
+    public String getObjectClass() {
+        return "stock";
+    }
+
     public int getNumber() {
         return number;
     }

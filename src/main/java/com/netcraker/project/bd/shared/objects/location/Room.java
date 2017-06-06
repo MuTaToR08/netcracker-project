@@ -23,6 +23,11 @@ public class Room extends ObjectBD {
         this.closed = closed;
     }
 
+    @Override
+    public String getObjectClass() {
+        return "room";
+    }
+
     public Room(HashMap<String, Object> e) throws Exception {
         super(e);
         if(e.containsKey("size") && e.get("size") != null) size= (Double) e.get("size");

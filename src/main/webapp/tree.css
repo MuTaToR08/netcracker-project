@@ -1,3 +1,15 @@
+.icon
+{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+}
+
+.gmap
+{
+    background: url(img/icon/gmap.png) no-repeat;
+}
+
 .tree-ul
 {
     padding-left: 10px;
@@ -23,7 +35,6 @@
     padding-right: 25px;
     border-radius: 10px;
     position: relative;
-    cursor: pointer;
 }
 
 .tree-ul-li .tree-element::after
@@ -93,7 +104,7 @@
     background: white url(/img/icon/carrier.png) no-repeat;
 }
 .tree-ul-li .tree-carrier:hover::after {
-    content: "TSP";
+    content: "Проводник";
 }
 
 .tree-ul-li .tree-floor::before
@@ -126,4 +137,79 @@
 }
 .tree-ul-li .tree-customer:hover::after {
     content: "Заказчик";
+}
+
+.tree-ul-li .tree-billing::before
+{
+    background: white url(/img/icon/billing.png) no-repeat;
+}
+.tree-ul-li .tree-billing:hover::after {
+    content: "Операция на счёте";
+}
+
+.tree-ul-li .tree-stand::before
+{
+    background: white url(/img/icon/stand.png) no-repeat;
+}
+.tree-ul-li .tree-stand:hover::after {
+    content: "Стойка";
+}
+
+.tree-ul-li .tree-switch::before
+{
+    background: white url(/img/icon/switch.png) no-repeat;
+}
+.tree-ul-li .tree-switch:hover::after {
+    content: "Коммутатор";
+}
+
+.tree-ul-li .tree-router::before
+{
+    background: white url(/img/icon/router.png) no-repeat;
+}
+.tree-ul-li .tree-router:hover::after {
+    content: "Маршрутизатор";
+}
+
+.tree-ul-li .tree-port::before
+{
+    background: white url(/img/icon/port.png) no-repeat;
+}
+.tree-ul-li .tree-port:hover::after {
+    content: "Порт";
+}
+
+.tree-ul-li .tree-order::before
+{
+    background: white url(/img/icon/order.png) no-repeat;
+}
+.tree-ul-li .tree-order:hover::after {
+    content: "Заказ";
+}
+
+.tree-ul-li .tree-csi::before
+{
+    background: white url(/img/icon/csi.png) no-repeat;
+}
+.tree-ul-li .tree-csi:hover::after {
+    content: "Подпись на услуги";
+}
+
+.tree-port .port-enable
+{
+    background: white url(/img/icon/on.png) no-repeat;
+}
+.tree-port .port-disable {
+    background: white url(/img/icon/off.png) no-repeat;
+}
+
+.button-open {
+    display: inline-block;
+    height: 20px;
+    margin-top: 7px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    color: white;
 }

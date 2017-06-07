@@ -28,7 +28,7 @@ public class ModelCustomer {
             Connection cn = ListenerContext.getDBOracle(context);
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery ("SELECT csiId,statusId,(dateEnd) dateEnd," +
-                    "(dateStart) dateStart,tspId,typeId,o_name,o_parent FROM TABLE(GETOBJECTS.CSI("+customerId+"))");
+                    "(dateStart) dateStart,tspId,typeId,o_name,o_parent FROM TABLE(GETOBJECTS.CSICustomer("+customerId+"))");
 
             while(rs.next()) {
                 CSI csi = new CSI(rs.getInt("csiId"),rs.getInt("statusID"),

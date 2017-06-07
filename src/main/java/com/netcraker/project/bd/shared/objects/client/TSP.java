@@ -19,8 +19,10 @@ public class TSP extends ObjectBD {
     public TSP(HashMap<String, Object> e) throws Exception {
         super(e);
         if(e.containsKey("price") && e.get("price") != null)price = (Double)(e.get("price"));
-        service = new Service(e);
-        tariff = new Tariff(e);
+        if(e.containsKey("service") && e.get("service") != null)service = new Service((HashMap<String, Object>) e.get("service"));
+        else service = null;
+        if(e.containsKey("tariff") && e.get("tariff") != null)tariff = new Tariff((HashMap<String, Object>) e.get("tariff"));
+        else tariff = null;
     }
 
     @Override

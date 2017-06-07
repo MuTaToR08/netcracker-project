@@ -2,6 +2,7 @@ package com.netcraker.project.bd.shared.objects.networked;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netcraker.project.bd.client.BD;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
@@ -30,6 +31,17 @@ public class Port extends ObjectBD {
         if(e.containsKey("enable") && e.get("enable") != null)enable = Boolean.valueOf(e.get("enable").toString());
 
     }
+
+    @Override
+    public String getObjectClass() {
+        return "port";
+    }
+
+    @Override
+    public String getHtmlUl() {
+        return "№"+num+"("+ (BD.statuses.get(type)==null?"":BD.statuses.get(type).getText())+")"+(enable?"<div class='icon port-enable'></div>":"<div class='icon port-disable'></div>");
+    }
+
 
     @Override
     public String toString() {

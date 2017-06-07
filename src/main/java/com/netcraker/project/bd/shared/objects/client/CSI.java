@@ -1,6 +1,8 @@
 package com.netcraker.project.bd.shared.objects.client;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netcraker.project.bd.client.BD;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
@@ -15,6 +17,15 @@ public class CSI extends ObjectBD {
 
     public CSI(HashMap<String, Object> e) throws Exception {
         super(e);
+        if(e.containsKey("status") && e.get("status") !=     null) status = Integer.valueOf(e.get("status").toString());
+        else status = 1;
+        if(e.containsKey("start") && e.get("start") != null) start = e.get("start").toString();
+        else start = "";
+        if(e.containsKey("end") && e.get("end") !=       null) status =Integer.valueOf(e.get("end").toString());
+        else end = "";
+        if(e.containsKey("tsp") && e.get("tsp") !=       null) tsp = new TSP((HashMap<String,Object>)e.get("tsp"));
+        else tsp = null;
+
     }
 
     @Override
@@ -58,6 +69,25 @@ public class CSI extends ObjectBD {
 
     public void setTsp(TSP tsp) {
         this.tsp = tsp;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getObjectClass() {
+        return "csi";
+    }
+
+    @Override
+    @JsonIgnore
+    public String getHtmlUl() {
+        return (BD.statuses.get(status)==null?"":BD.statuses.get(status).getText())+"|"+start+"-"+end+"|"+
+                (BD.statuses.get(tsp.getService().getView())==null?"":BD.statuses.get(tsp.getService().getView()).getText())+
+                "|"+tsp.getService().getName()+"|"+tsp.getPrice()+"руб";
+    }
+
+    @Override
+    public String publicName() {
+        return super.publicName();
     }
 
     @JsonCreator

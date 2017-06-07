@@ -1,6 +1,7 @@
 package com.netcraker.project.bd.shared.objects.location;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.apache.tapestry.wml.Do;
@@ -47,10 +48,19 @@ public class Building extends ObjectBD {
     }
 
     @Override
+    @JsonIgnore
     public String getHtmlUl() {
 
-        return super.getHtmlUl();
+        return publicName()+"|"+address+"<a href='https://maps.google.com/?q=@"+lat+","+lon+"' target='_blank'><div class='icon gmap'></div></a>";
     }
+
+/*
+    @Override
+    @JsonIgnore
+    public String publicName() {
+        return address;
+    }
+*/
 
     @JsonCreator
     public Building(@JsonProperty("id") int id,@JsonProperty("lat") double lat,@JsonProperty("lon") double lon,
@@ -101,5 +111,6 @@ public class Building extends ObjectBD {
     }
 
     @Override
+    @JsonIgnore
     public String getObjectClass(){return "building";}
 }

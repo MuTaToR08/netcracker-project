@@ -1,6 +1,7 @@
 package com.netcraker.project.bd.shared.objects.location;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
@@ -19,11 +20,30 @@ public class Stand  extends ObjectBD{
         this.slots = slots;
     }
 
+    @Override
+    public String getHtmlUl() {
+        return "Сойка. Размер:"+size+", слотов:"+slots;
+    }
+
+    /*@Override
+    public String publicName() {
+        return super.publicName();
+    }*/
+
+    @Override
+    @JsonIgnore
+    public String getObjectClass() {
+        return "stand";
+    }
+
     public Stand(HashMap<String, Object> e) throws Exception {
         super(e);
         if(e.containsKey("size") && e.get("size") != null)size = e.get("size").toString();
+        else
+            size = "0x0";
         if(e.containsKey("slots") && e.get("slots") != null) slots = Integer.valueOf(e.get("slots").toString());
-
+        else
+            slots = 0;
     }
 
     @Override

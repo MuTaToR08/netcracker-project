@@ -11,11 +11,44 @@ import java.util.HashMap;
 public class Customer extends ObjectBD {
     public Customer(HashMap<String, Object> e) throws Exception {
         super(e);
+        if(e.containsKey("fio") && e.get("fio") != null)
+            fio = e.get("fio").toString();
+        else
+            fio = "";
+
+        if(e.containsKey("inn") && e.get("inn") != null)
+            inn = Integer.valueOf(e.get("inn").toString());
+        else
+            inn = 0;
+        if(e.containsKey("phone") && e.get("phone") != null)
+            phone = Integer.valueOf(e.get("phone").toString());
+        else
+            phone = 0;
+        if(e.containsKey("username") && e.get("username") != null)
+            username = e.get("username").toString();
+        else
+            username = null;
+
+        if(e.containsKey("password") && e.get("password") != null)
+            password = e.get("password").toString();
+        else
+            password = null;
+
+        if(e.containsKey("tariff") && e.get("tariff") != null)
+            tariff = new Tariff((HashMap<String, Object>)e.get("tariff"));
+        else
+            tariff = null;
+
+        if(e.containsKey("status") && e.get("status") != null)
+            status = Integer.valueOf(e.get("status").toString());
+
+        if(e.containsKey("balance") && e.get("balance") != null)
+            balance = Integer.valueOf(e.get("balance").toString());
     }
 
     @Override
     public String publicName() {
-        return getObjName();
+        return getFio();
     }
 
     //private int type;
@@ -87,6 +120,7 @@ public class Customer extends ObjectBD {
     public String getObjectClass() {
         return "customer";
     }
+
 
     public int getInn() {
         return inn;

@@ -2,7 +2,9 @@ package com.netcraker.project.bd.shared.objects.client;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netcraker.project.bd.client.BD;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
@@ -19,10 +21,15 @@ public class Order extends ObjectBD{
     public Order(HashMap<String, Object> e) throws Exception {
         super(e);
         if(e.containsKey("endDate") && e.get("endDate") !=     null) endDate = e.get("endDate").toString();
+        else endDate = "";
         if(e.containsKey("startDate") && e.get("startDate") != null) startDate = e.get("startDate").toString();
+        else startDate = "";
         if(e.containsKey("status") && e.get("status") !=       null) status =Integer.valueOf(e.get("status").toString());
+        else status = 1;
         if(e.containsKey("type") && e.get("type") !=           null) type = Integer.valueOf(e.get("type").toString());
+        else type = 1;
         if(e.containsKey("csi") && e.get("csi") !=             null) csi = Integer.valueOf(e.get("csi").toString());
+        else csi = 0;
     }
 
     public int getCsi() {
@@ -74,6 +81,18 @@ public class Order extends ObjectBD{
         this.status = status;
         this.type = type;
         this.csi = csi;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getObjectClass() {
+        return "order";
+    }
+
+    @Override
+    @JsonIgnore
+    public String getHtmlUl() {
+        return publicName()+", "+startDate+"-"+endDate+"|"+(BD.statuses.get(type)==null?"":BD.statuses.get(type).getText())+"|<b>"+(BD.statuses.get(status)==null?"":BD.statuses.get(status).getText())+"</b>";
     }
 
     @Override

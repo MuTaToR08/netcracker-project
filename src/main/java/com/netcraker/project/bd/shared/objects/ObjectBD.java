@@ -2,6 +2,7 @@ package com.netcraker.project.bd.shared.objects;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashMap;
@@ -86,6 +87,7 @@ public class ObjectBD implements Named{
         this.parentId = parentId <=0?null:parentId;
     }
 
+
     public int getObjectType() {
         return objectType;
     }
@@ -94,6 +96,7 @@ public class ObjectBD implements Named{
         this.objectType = objectType;
     }
 
+    @JsonIgnore
     public String getObjectClass()
     {
         return "general";
@@ -109,6 +112,7 @@ public class ObjectBD implements Named{
         return id == objectBD.id;
     }
 
+    @JsonIgnore
     public String getHtmlUl()
     {
         return id+"|"+publicName()+"|"+objDesc+"|"+objectType+"|"+parentId;

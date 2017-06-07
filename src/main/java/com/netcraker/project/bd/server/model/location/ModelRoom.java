@@ -46,6 +46,6 @@ public class ModelRoom implements DefaultMethod<Room> {
 
     @Override
     public Room createObject(ResultSet rs) throws SQLException {
-        return new Room(rs.getInt("roomId"),rs.getDouble("roomSize"),rs.getBoolean("services"),rs.getBoolean("closed"));
+        return new Room(rs.getInt("roomId"),rs.getDouble("roomSize"),rs.getBoolean("services"),rs.getBoolean("closed"),rs.getInt("num"));
     }
 }

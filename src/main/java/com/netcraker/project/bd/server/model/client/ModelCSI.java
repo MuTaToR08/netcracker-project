@@ -41,7 +41,7 @@ public class ModelCSI implements DefaultMethod<CSI> {
 
     @Override
     public CSI createObject(ResultSet rs) throws SQLException {
-        return new CSI(rs.getInt("csiID"),rs.getInt("status"),rs.getString("startDate"),rs.getString("endDate"),new ModelTSP(context).getById(rs.getInt("tspId")));
+        return new CSI(rs.getInt("csiID"),rs.getInt("statusid"),rs.getString("dateStart"),rs.getString("dateEnd"),new ModelTSP(context).getById(rs.getInt("tspId")));
     }
 
     @Override

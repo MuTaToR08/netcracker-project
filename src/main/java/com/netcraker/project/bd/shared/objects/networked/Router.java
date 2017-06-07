@@ -1,7 +1,9 @@
 package com.netcraker.project.bd.shared.objects.networked;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netcraker.project.bd.client.BD;
 import org.fusesource.restygwt.client.Json;
 
 import java.util.HashMap;
@@ -22,8 +24,24 @@ public class Router extends NetworkHardware {
     public Router(HashMap<String, Object> e) throws Exception {
         super(e);
         if(e.containsKey("ip") && e.get("ip") != null)ip = (e.get("ip").toString());
+        else
+            ip = "0.0.0.0";
         if(e.containsKey("mask") && e.get("mask") != null)mask = (e.get("mask").toString());
+        else
+            mask = "255.255.255.255";
 
+    }
+
+    @Override
+    @JsonIgnore
+    public String getObjectClass() {
+        return "router";
+    }
+
+    @Override
+    @JsonIgnore
+    public String getHtmlUl() {
+        return publicName()+" <b>"+(BD.statuses.get(getRole())!=null?BD.statuses.get(getRole()).getText():"")+"</B> "+ip+"/"+mask;
     }
 
 

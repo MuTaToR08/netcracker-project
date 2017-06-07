@@ -100,8 +100,8 @@ public class TreePanel implements Panels {
             Widget html = new HTML(treeNode.getElemnt().getHtmlUl());
             html.setStyleName("tree-"+treeNode.getElemnt().getObjectClass());
             html.addStyleName("tree-element");
-            html.getElement().setAttribute("data-id",String.valueOf(treeNode.getElemnt().getId()));
-            html.addDomHandler(new ClickHandler() {
+
+            Button open = new Button("Open", new ClickHandler() {
                 @Override
                 public void onClick(ClickEvent clickEvent) {
                     TreeApi treeApi = GWT.create(TreeApi.class);
@@ -120,9 +120,18 @@ public class TreePanel implements Panels {
                         }
                     });
                 }
-            }, ClickEvent.getType());
+            });
+            open.getElement().setAttribute("data-id",String.valueOf(treeNode.getElemnt().getId()));
+            open.setStyleName("button-open");
+            /*html.addDomHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent clickEvent) {
+
+                }
+            }, ClickEvent.getType());*/
 
             data.add(html);
+            data.add(open);
             data.add(new Button("visible", new ClickHandler() {
                 @Override
                 public void onClick(ClickEvent clickEvent) {

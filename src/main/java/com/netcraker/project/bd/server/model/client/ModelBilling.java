@@ -46,7 +46,7 @@ public class ModelBilling implements DefaultMethod<Billing> {
     @Override
     public Billing createObject(ResultSet rs) throws SQLException {
         return new Billing(rs.getInt("billingID"),rs.getString("startDate"),
-                rs.getString("endDate"),rs.getInt("status"),rs.getInt("typeBilling"));
+                rs.getString("endDate"),rs.getInt("status"),rs.getInt("amount"));
     }
 
 }

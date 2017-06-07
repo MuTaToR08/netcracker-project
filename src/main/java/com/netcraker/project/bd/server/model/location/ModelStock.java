@@ -46,6 +46,6 @@ public class ModelStock implements DefaultMethod<Stock> {
 
     @Override
     public Stock createObject(ResultSet rs) throws SQLException {
-        return new Stock(rs.getInt("stockId"),rs.getInt("num"),rs.getDouble("stockSize"));
+        return new Stock(rs.getInt("stockId"),rs.getInt("num"),rs.getString("stockSize"));
     }
 }

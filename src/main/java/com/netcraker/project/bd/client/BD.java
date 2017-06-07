@@ -29,11 +29,9 @@ public class BD implements EntryPoint {
   private static final String SERVER_ERROR = "An error occurred while "
       + "attempting to contact the server. Please check your network "
       + "connection and try again.";
-  public static Map<Integer, Status> statuses = null;
+  public static Map<Integer, Status> statuses;
 
-    public static Map<Integer,ObjectType> types = null;
-  static boolean loadStatus = false;
-  static boolean loadtype = false;
+    public static Map<Integer,ObjectType> types;
     static BD gwtInstance = null;
     //BD()
   //  {gwtInstance = this;}

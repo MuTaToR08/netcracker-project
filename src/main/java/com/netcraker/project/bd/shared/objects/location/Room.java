@@ -43,9 +43,16 @@ public class Room extends ObjectBD {
 
     private int number;
 
+    @JsonIgnore
+    @Override
+    public String publicName() {
+        return "Кабинет:"+number;
+    }
+
+    @JsonIgnore
     @Override
     public String getHtmlUl() {
-        return "Комната:"+number+", площадь:"+size+" "+(services?"(Служебное)":"")+" "+(closed?"(закрытое)":"");
+        return publicName()+", площадь:"+size+" "+(services?"(Служебное)":"")+" "+(closed?"(закрытое)":"");
     }
 
     @Override

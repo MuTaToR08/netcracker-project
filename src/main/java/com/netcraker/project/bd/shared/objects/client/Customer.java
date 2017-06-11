@@ -2,20 +2,19 @@ package com.netcraker.project.bd.shared.objects.client;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gwt.user.client.ui.Widget;
+import com.netcraker.project.bd.client.BD;
+import com.netcraker.project.bd.shared.objects.controled.FullWindow;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
 import java.util.HashMap;
 
 @Json
-public class Customer extends ObjectBD {
+public class Customer extends ObjectBD implements FullWindow {
+
     public Customer(HashMap<String, Object> e) throws Exception {
         super(e);
-        if(e.containsKey("fio") && e.get("fio") != null)
-            fio = e.get("fio").toString();
-        else
-            fio = "";
-
         if(e.containsKey("inn") && e.get("inn") != null)
             inn = Integer.valueOf(e.get("inn").toString());
         else
@@ -28,6 +27,10 @@ public class Customer extends ObjectBD {
             username = e.get("username").toString();
         else
             username = null;
+        if(e.containsKey("fio") && e.get("fio") != null)
+            fio = e.get("fio").toString();
+        else
+            fio = null;
 
         if(e.containsKey("password") && e.get("password") != null)
             password = e.get("password").toString();
@@ -121,6 +124,10 @@ public class Customer extends ObjectBD {
         return "customer";
     }
 
+    @Override
+    public String getHtmlUl() {
+        return publicName()+", inn:"+inn+", username:"+username+"|"+(BD.statuses.get(status)==null?"":BD.statuses.get(status).getText())+"|balance:"+balance;
+    }
 
     public int getInn() {
         return inn;

@@ -6,6 +6,7 @@ import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.netcraker.project.bd.client.api.StaticObjectApi;
 import com.netcraker.project.bd.client.windows.CustomerPanel;
@@ -46,6 +47,15 @@ public class BD implements EntryPoint {
 
     final CustomerPanel customerPanel = new CustomerPanel(this);
   final TreePanel treePanel = new TreePanel();
+
+  public CustomerPanel getCustomerPanel() {
+    return customerPanel;
+  }
+
+  public TreePanel getTreePanel() {
+    return treePanel;
+  }
+
   final protected RootPanel main = RootPanel.get("main");
 
   protected final RootPanel menuButton = RootPanel.get("menu-buttons");
@@ -110,8 +120,22 @@ public class BD implements EntryPoint {
     setDefaultElement();
       customerPanel.replaceWindows();
       customerPanel.refreshData();
+  }
 
+  static public void viewPreloader()
+  {
 
+    Panel panel = RootPanel.get("preloader");
+    RootPanel.get("breadcrumbs").clear();
+    panel.removeStyleName("none");
+    panel.addStyleName("opacity");
+  }
+
+  static public void hidePreloader()
+  {
+    Panel panel = RootPanel.get("preloader");
+    panel.removeStyleName("opacity");
+    panel.addStyleName("none");
   }
 
   private void setDefaultElement() {

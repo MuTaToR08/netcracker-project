@@ -1,6 +1,4 @@
-package com.netcraker.project.bd.server.model.networked;
-
-import com.sun.deploy.security.ValidationState;
+package com.netcraker.project.bd.shared;
 
 /**
  * Created by mutat on 06.06.2017.

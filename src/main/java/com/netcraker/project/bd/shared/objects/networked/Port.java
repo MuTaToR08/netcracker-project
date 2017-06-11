@@ -2,14 +2,25 @@ package com.netcraker.project.bd.shared.objects.networked;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.Widget;
 import com.netcraker.project.bd.client.BD;
+import com.netcraker.project.bd.client.api.networked.PortApi;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
+import com.netcraker.project.bd.shared.objects.controled.ExtendsButton;
+import javafx.scene.layout.Pane;
 import org.fusesource.restygwt.client.Json;
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.HashMap;
 
 @Json
-public class Port extends ObjectBD {
+public class Port extends ObjectBD implements ExtendsButton {
     private int num;
     private boolean enable;
     private int type;
@@ -75,4 +86,6 @@ public class Port extends ObjectBD {
     public void setType(int type) {
         this.type = type;
     }
+
+
 }

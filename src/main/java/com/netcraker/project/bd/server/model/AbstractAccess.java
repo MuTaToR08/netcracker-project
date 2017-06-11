@@ -33,19 +33,23 @@ public class AbstractAccess {
             throw new SQLException("not name return function");
         return templateGetById(dm.getObjectName(),id);
     }
-    public ObjectBD templateGetById(String table, Integer id) throws SQLException {
+    public ObjectBD templateGetBySQL( String sql) throws SQLException {
+            if(Objects.equals(dm.getObjectName(), ""))
+                throw new SQLException("not name return function");
+            return templateGetById(dm.getObjectName(),sql);
+        }
 
-        String statementPatern = "("+id+")";
-        /*if(map == null || map.length == 0)
-            statementPatern  = "";
-        else
-            statementPatern = "("+ StringUtils.substring(StringUtils.repeat("?,",map.length),0,map.length*2-1) +")";
-*/
+    public ObjectBD templateGetById(String table, Integer id) throws SQLException {
+        return templateGetById(table,"("+id+")");
+    }
+
+    public ObjectBD templateGetById(String table, String SQL) throws SQLException {
+
+        String statementPatern = "(("+SQL+"))";
+
         Connection cn = ListenerContext.getDBOracle(context);
 
         CallableStatement st = cn.prepareCall("SELECT * FROM TABLE(GETOBJECTS."+table+statementPatern+")");
-        //for (int i=0;i<map.length;i++)
-          //  st.setInt(i+1,map[i]);
 
         ResultSet rs = st.executeQuery();
         ObjectBD ret = null;
@@ -55,6 +59,7 @@ public class AbstractAccess {
         st.close();
         return ret;
     }
+
     private static void defaultObject(ObjectBD ret, ResultSet rs){
 
         try {

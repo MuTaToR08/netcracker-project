@@ -4,10 +4,11 @@ package com.netcraker.project.bd.shared.objects;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netcraker.project.bd.shared.objects.controled.Named;
 
 import java.util.HashMap;
 
-public class ObjectBD implements Named{
+public class ObjectBD implements Named {
 
     protected int id;
     private String objName;

@@ -2,6 +2,7 @@ package com.netcraker.project.bd.server.services.api.networked;
 
 
 import com.netcraker.project.bd.server.model.networked.ModelPort;
+import com.netcraker.project.bd.shared.objects.networked.Carrier;
 import com.netcraker.project.bd.shared.objects.networked.Port;
 import org.fusesource.restygwt.client.RestService;
 
@@ -35,4 +36,11 @@ public class ServicePort implements RestService{
         return new ModelPort(context).getById(id);
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{id}/carrier")
+    public Carrier getCarrier(@PathParam("id") int id)
+    {
+        return new ModelPort(context).getCarrier(id);
+    }
 }

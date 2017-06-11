@@ -22,9 +22,9 @@ public class ServiceTree implements RestService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("parent/{id}/")
-    public ObjectBD[] getParents(@PathParam("id") int id)
+    public List<Object> getParents(@PathParam("id") int id)
     {
-        return new ObjectBD[0];
+        return (List<Object>) new FactoryObjectsBD(context).getParent(id);
     }
 
     @GET

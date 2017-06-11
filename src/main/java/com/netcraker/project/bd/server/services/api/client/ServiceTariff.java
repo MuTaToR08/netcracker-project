@@ -6,10 +6,9 @@ import com.netcraker.project.bd.shared.objects.client.Tariff;
 import org.fusesource.restygwt.client.RestService;
 
 import javax.servlet.ServletContext;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -19,12 +18,13 @@ import java.util.Map;
 @Path("tariff")
 public class ServiceTariff implements RestService {
 
-    private final Map<Integer, Tariff> allTariff = new HashMap<>();
+    private static Map<Integer, Tariff> allTariff = new HashMap<>();
     private static long cache = 0;
     @Context
     private ServletContext context;
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public Tariff getId(@PathParam("id") int id)
     {
@@ -40,6 +40,7 @@ public class ServiceTariff implements RestService {
 
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Map<Integer, Tariff> getAll()
     {
         if(( System.currentTimeMillis() / 1000L)-cache < 3600)
@@ -51,7 +52,7 @@ public class ServiceTariff implements RestService {
             Connection cn = ListenerContext.getDBOracle(context);
 
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery ("SELECT * FROM TABLE(getobjects.tariff);");
+            ResultSet rs = st.executeQuery ("SELECT * FROM TABLE(getobjects.tariff)");
 
             while(rs.next()) {
                 allTariff.put(rs.getInt("tariffId"), new Tariff(rs.getInt("tariffId"), rs.getString("tariffName"), rs.getInt("statusid")));

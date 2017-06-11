@@ -4,6 +4,7 @@ import com.netcraker.project.bd.config.ListenerContext;
 import com.netcraker.project.bd.server.model.client.*;
 import com.netcraker.project.bd.server.model.location.*;
 import com.netcraker.project.bd.server.model.networked.*;
+import com.netcraker.project.bd.shared.TypeName;
 import com.netcraker.project.bd.shared.containers.SimpleContainer;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 
@@ -24,7 +25,8 @@ public class FactoryObjectsBD {
         this.context = context;
     }
 
-    public List<? super ObjectBD> getChields(int id) {
+    public List<? super ObjectBD> getParent(int id)
+    {
         List<? super ObjectBD> ret = new ArrayList<>();
 
         Connection cn = ListenerContext.getDBOracle(context);
@@ -32,7 +34,7 @@ public class FactoryObjectsBD {
         try {
             st = cn.createStatement();
 
-            ResultSet rs = st.executeQuery("SELECT * FROM objects WHERE container_id " + (id==0?"is null":" = "+id) + " ORDER BY object_type_id,object_id");
+            ResultSet rs = st.executeQuery(String.format("SELECT * FROM objects START WITH object_id = %d CONNECT BY object_id = PRIOR container_id  ORDER BY LEVEL DESC", id));
 
             while (rs.next())
             {
@@ -45,6 +47,30 @@ public class FactoryObjectsBD {
         } catch(SQLException e){
             e.printStackTrace();
             //catch e;
+        }
+
+        return ret;
+    }
+
+    public List<? super ObjectBD> getChields(int id) {
+        List<? super ObjectBD> ret = new ArrayList<>();
+
+        Connection cn = ListenerContext.getDBOracle(context);
+        Statement st;
+        try {
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(String.format("SELECT * FROM objects WHERE container_id %s ORDER BY object_type_id,object_id", id == 0 ? "is null" : " = " + id));
+
+            while (rs.next())
+            {
+                SimpleContainer<? super ObjectBD> test = getObject(rs.getInt("object_id"),rs.getInt("object_type_id"));
+
+                if (null != test.getData()) {
+                    ret.add(test.getData());
+                }
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
         }
 
         return ret;

@@ -213,3 +213,35 @@
     margin-left: 5px;
     color: white;
 }
+.button-open:hover
+{
+    background: none;
+    color: greenyellow;;
+}
+
+.button-visible
+{
+    border: none;
+    width: 51px;
+    height: 20px;
+    display: inline-block;
+    margin-top: 5px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    background: none;
+    background-color: hotpink;
+}
+.button-visible:hover
+{
+    background-color: #00e6ff;
+}
+
+.port-goto {
+
+}
+
+.labelCustomer {
+    display: inline-block;
+    width: 100px;
+}

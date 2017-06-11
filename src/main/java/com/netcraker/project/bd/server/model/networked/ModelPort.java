@@ -1,15 +1,22 @@
 package com.netcraker.project.bd.server.model.networked;
 
 
+import com.netcraker.project.bd.config.ListenerContext;
 import com.netcraker.project.bd.server.model.AbstractAccess;
 import com.netcraker.project.bd.server.model.DefaultMethod;
+import com.netcraker.project.bd.shared.objects.ObjectBD;
+import com.netcraker.project.bd.shared.objects.networked.Carrier;
 import com.netcraker.project.bd.shared.objects.networked.Port;
 
 import javax.servlet.ServletContext;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+
+import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 
 public class ModelPort implements DefaultMethod<Port>{
 
@@ -47,5 +54,10 @@ public class ModelPort implements DefaultMethod<Port>{
     @Override
     public String getObjectName() {
         return "port";
+    }
+
+    public Carrier getCarrier(int id) {
+       return new ModelCarrier(context).getByStatment("SELECT REFERENCE_ID FROM references " +
+               "WHERE object_id = "+id+" AND attribute_id = 70");
     }
 }

@@ -23,6 +23,16 @@ public class ModelCarrier implements DefaultMethod<Carrier> {
     }
 
     @Override
+    public Carrier getByStatment(String SQL) {
+        try {
+            return (Carrier) new AbstractAccess(context,this).templateGetBySQL(SQL);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public Carrier getById(int id)  {
         try {
             return (Carrier) new AbstractAccess(context,this).templateGetById(id);

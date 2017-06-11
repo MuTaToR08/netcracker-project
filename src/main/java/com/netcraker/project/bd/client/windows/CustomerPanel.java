@@ -34,6 +34,7 @@ public class CustomerPanel implements Panels {
 
     public void refreshData()
     {
+        BD.viewPreloader();
         listCustomer.clear();
         CustomerApi RPC = GWT.create(CustomerApi.class);
         RPC.getAll(new MethodCallback<Map<Integer, Customer>>() {
@@ -48,7 +49,7 @@ public class CustomerPanel implements Panels {
                 {
                     listCustomer.add(GetCustomerElements(cust.getValue()));
                 }
-
+                BD.hidePreloader();
             }
         });
     }
@@ -82,7 +83,6 @@ public class CustomerPanel implements Panels {
                         popupCSI.hide();
                     }
                 },ClickEvent.getType());
-
                 CustomerApi customerApi = GWT.create(CustomerApi.class);
                 customerApi.getCSICustomer(customer.getId(), new MethodCallback<List<CSI>>() {
                     @Override
@@ -123,7 +123,9 @@ public class CustomerPanel implements Panels {
         toTree.addMouseUpHandler(new MouseUpHandler() {
             @Override
             public void onMouseUp(MouseUpEvent mouseUpEvent) {
-
+                TreePanel tree= mainWindows.getTreePanel();
+                tree.replaceWindows();
+                tree.refreshData(customer.getId());
             }
         });
         control.add(toTree);

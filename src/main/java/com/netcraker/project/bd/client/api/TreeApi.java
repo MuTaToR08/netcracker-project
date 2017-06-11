@@ -13,9 +13,9 @@ import java.util.List;
 public interface TreeApi extends RestService {
 
 
-   /* @GET
+    @GET
     @Path("parent/{id}/")
-    void getParents(@PathParam("id") int id);*/
+    void getParents(@PathParam("id") int id, MethodCallback<List<Object>> objects);
 
     @GET
     @Path("children/{id}")

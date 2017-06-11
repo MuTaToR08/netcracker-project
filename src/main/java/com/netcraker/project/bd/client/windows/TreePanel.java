@@ -1,15 +1,19 @@
 package com.netcraker.project.bd.client.windows;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.builder.shared.UListBuilder;
-import com.google.gwt.dom.client.UListElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
+import com.netcraker.project.bd.client.BD;
 import com.netcraker.project.bd.client.api.TreeApi;
-import com.netcraker.project.bd.shared.containers.SimpleContainer;
+import com.netcraker.project.bd.client.buttons.AdditionButton;
+import com.netcraker.project.bd.client.FactoryView;
+import com.netcraker.project.bd.client.full.FullWindowPanel;
+import com.netcraker.project.bd.shared.TypeName;
 import com.netcraker.project.bd.shared.containers.TreeNode;
+import com.netcraker.project.bd.shared.objects.controled.ExtendsButton;
+import com.netcraker.project.bd.shared.objects.controled.FullWindow;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import com.netcraker.project.bd.shared.objects.client.*;
 import com.netcraker.project.bd.shared.objects.location.*;
@@ -17,12 +21,10 @@ import com.netcraker.project.bd.shared.objects.networked.Carrier;
 import com.netcraker.project.bd.shared.objects.networked.Port;
 import com.netcraker.project.bd.shared.objects.networked.Router;
 import com.netcraker.project.bd.shared.objects.networked.Switch;
-import org.apache.tapestry.wml.Do;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class TreePanel implements Panels {
@@ -42,60 +44,18 @@ public class TreePanel implements Panels {
         replaced.clear();
     }
 
-    private ObjectBD createObject(Object e1) {
-        HashMap<String, Object> e = (HashMap<String, Object>) e1;
-        try {
-            switch (Integer.valueOf(e.get("objectType").toString())) {
-                case 1://Здание
-                    return new Building(e);
-                case 2://Этаж
-                    return new Floor(e);
-                case 3://Комната
-                    return new Room(e);
-                case 4://Стойка
-                    return new Stand(e);
-                case 15://Провод Carrier
-                    return new Carrier(e);
-                case 16://Комутатор
-                    return new Switch(e);
-                case 17://Маршрутизатор
-                    return new Router(e);
-                case 28://Порт
-                    return new Port(e);
-                case 29://Заказ
-                    return new Order(e);
-                case 30://Заказчик
-                    return new Customer(e);
-                case 31://Услуга(сервис)
-                    return new Service(e);
-                case 32://Тариф
-                    return new Tariff(e);
-                case 33://Оказание услуги(SCI)
-                    return new CSI(e);
-                case 34://Операции по счёту(billing)
-                    return new Billing(e);
-                case 35://Цена (TSP)
-                    return new TSP(e);
-                case 39://Хранилище
-                    return new Stock(e);
-                default:
-                    Window.alert(e.get("objectType").toString());
-            }
-        } catch (Exception e2) {
-        }
-        return null;
-    }
-
     public void makeupTree(TreeNode node,Panel panel)
     {
         FlowPanel ul = new FlowPanel();
         ul.setStyleName("tree-ul");
+        int response = 0;
         for (TreeNode treeNode : node.getChildren()) {
             if(!treeNode.isVisible())
                 continue;
             FlowPanel li = new FlowPanel();
             FlowPanel data = new FlowPanel();
             FlowPanel treeflow = new FlowPanel();
+            FlowPanel flowPanel = null;
             ul.setStyleName("tree-ul-li");
             Widget html = new HTML(treeNode.getElemnt().getHtmlUl());
             html.setStyleName("tree-"+treeNode.getElemnt().getObjectClass());
@@ -106,6 +66,7 @@ public class TreePanel implements Panels {
                 public void onClick(ClickEvent clickEvent) {
                     TreeApi treeApi = GWT.create(TreeApi.class);
                     final int id = Integer.valueOf(clickEvent.getRelativeElement().getAttribute("data-id"));
+                    BD.viewPreloader();
                     treeApi.getChilds(id, new MethodCallback<List<Object>>() {
                         @Override
                         public void onFailure(Method method, Throwable throwable) {
@@ -132,12 +93,27 @@ public class TreePanel implements Panels {
 
             data.add(html);
             data.add(open);
-            data.add(new Button("visible", new ClickHandler() {
-                @Override
-                public void onClick(ClickEvent clickEvent) {
+            if(treeNode.getElemnt() instanceof FullWindow) {
+                Button visib = new Button("visible", new ClickHandler() {
+                    @Override
+                    public void onClick(ClickEvent clickEvent) {
+                        FullWindowPanel fwp = FactoryView.getAddition(treeNode.getElemnt());
+                        fwp.OpenWindow(treeNode.getElemnt());
+                    }
+                });
+                visib.setStyleName("button-visible");
+                data.add(visib);
+            }
 
+            if(treeNode.getElemnt() instanceof ExtendsButton) {
+                flowPanel = new FlowPanel();
+                flowPanel.getElement().setId("port_"+treeNode.getElemnt().getId());
+                AdditionButton add = FactoryView.getAddition(treeNode.getElemnt(), this);
+                if (add != null) {
+                    add.extendsButton(flowPanel,treeNode.getElemnt());
+                    data.add(flowPanel);
                 }
-            }));
+            }
             li.add(data);
             data.setStyleName("info");
             treeflow.setStyleName("children");
@@ -149,6 +125,7 @@ public class TreePanel implements Panels {
             ul.add(li);
         }
         panel.add(ul);
+        BD.hidePreloader();
     }
 
     private Boolean hideNonClock(int id, TreeNode node) {
@@ -174,17 +151,6 @@ public class TreePanel implements Panels {
                 treeNode.setVisible(false);
             }
         }
-        /*for (TreeNode treeNode : node.getChildren()){
-
-            if(curRet == treeNode.getElemnt().getId()) {
-                visible(id, treeNode, true);
-                treeNode.setVisible(true);
-            }
-            else {
-                treeNode.setVisible(false);
-                visible(id, treeNode, false);
-            }
-        }*/
         return curRet;
     }
 
@@ -218,7 +184,7 @@ public class TreePanel implements Panels {
     void addToTree(int id,List<Object> objects)
     {
         for (Object object : objects) {
-            ObjectBD tmp = createObject(object);
+            ObjectBD tmp = FactoryView.createObject(object);
             if (tmp == null)
                 continue;
             TreeNode node = addToNode(id,tmp);
@@ -231,6 +197,7 @@ public class TreePanel implements Panels {
         tree.getChildren().clear();
         allObject.clear();
         TreeApi treeApi = GWT.create(TreeApi.class);
+        BD.viewPreloader();
         final int idGet = 0;
         treeApi.getChilds(idGet, new MethodCallback<List<Object>>() {
             @Override
@@ -245,9 +212,47 @@ public class TreePanel implements Panels {
             }
         });
     }
+
+
+    public void refreshData(int id) {
+        tree.getChildren().clear();
+        allObject.clear();
+        TreeApi treeApi = GWT.create(TreeApi.class);
+        final int idGet = id;
+        BD.viewPreloader();
+        treeApi.getParents(id, new MethodCallback<List<Object>>() {
+            @Override
+            public void onFailure(Method method, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onSuccess(Method method, List<Object> objects) {
+                for (Object object : objects) {
+                    ObjectBD tmp = FactoryView.createObject(object);
+                    if (tmp == null)
+                        continue;
+                    TreeNode node = addToNode(tmp.getParentId(),tmp);
+                    allObject.put(tmp.getId(),node);
+                }
+                makeupTree();
+            }
+        });
+    }
+
+    private void treeCreate(TreeNode tr)
+    {
+
+
+    }
+
+
+
+
+
     private  TreeNode addToNode(int idGet,ObjectBD tmp)
     {
-        if(idGet == 0)
+        if(idGet == 0 || allObject.get(idGet) == null)
             return tree.addChildren(tmp);
 
         return allObject.get(idGet).addChildren(tmp);

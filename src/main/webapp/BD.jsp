@@ -15,7 +15,76 @@
     <!-- Any title is fine                         -->
     <!--                                           -->
     <title>Project UI fro BD</title>
+    <style>
+      #preloader {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        left: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        z-index: 2000001;
+        background-color: #0074D9;
+        pointer-events: none;
+        top: 0;
+      }
+      #preloader .text
+      {
+        color: white;
+        text-transform: uppercase;
+        font-size: 25px;
+        margin-bottom: 25px;
+      }
 
+      #preloader > #circle
+      {
+        width: 1px;
+        height: 1px;
+        border-radius: 50%;
+        display: block;
+        position: relative;
+        background-color: white;
+        border: 99px solid #00e6ff;
+        border-right-color: #0074D9;
+        border-left-color: #0074D9;
+
+        animation: -1s preloaderRotation 2s infinite linear;
+      }
+
+      #preloader.none
+      {
+        display: none;
+      }
+      #preloader .downlayer
+      {
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        align-items: center;
+        pointer-events: auto;
+        opacity: 0;
+      }
+      #preloader.opacity
+      {
+        opacity: 0.5;
+        background-color: darkslategrey;
+      }
+      @keyframes preloaderRotation {
+        from
+        {
+          transform: rotateZ(0deg);
+        }
+        to
+        {
+          transform: rotateZ(360deg);
+        }
+      }
+    </style>
     <!--                                           -->
     <!-- This script loads your compiled module.   -->
     <!-- If you add any GWT meta tags, they must   -->
@@ -32,6 +101,7 @@
   <body>
   <div id="statusList" style="display: none"><%= sc.getAttribute("statusList").toString() %></div>
   <div id="objectType" style="display: none"><%= sc.getAttribute("objectType").toString() %></div>
+
   <script type="text/javascript">
     window.objectType = <%= sc.getAttribute("objectType").toString() %> ;
     window.statusList = <%= sc.getAttribute("statusList").toString() %> ;
@@ -52,7 +122,7 @@
         <nav id="menu">
           <div class="buttons" id="menu-buttons">
           </div>
-          <ul class="breadscrumb">
+          <ul id="breadcrumbs">
           </ul>
         </nav>
       </header>
@@ -76,5 +146,10 @@
         <td colspan="2" style="color:red;" id="errorLabelContainer"></td>
       </tr>
     </table-->
+  <div id="preloader">
+    <div class="downlayer"></div>
+    <div class="text">Loading...</div>
+    <div id="circle"></div>
+  </div>
   </body>
 </html>

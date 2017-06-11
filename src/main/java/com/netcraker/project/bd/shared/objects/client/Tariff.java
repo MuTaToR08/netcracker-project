@@ -1,6 +1,7 @@
 package com.netcraker.project.bd.shared.objects.client;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
@@ -34,7 +35,7 @@ public class Tariff extends ObjectBD {
 //
  }
 
-
+@JsonIgnore
     public String getTariffName() {
         return getObjName();
     }
@@ -53,7 +54,7 @@ public class Tariff extends ObjectBD {
     }
 
     @JsonCreator
-    public Tariff(@JsonProperty("id") int id,@JsonProperty("tariffName") String tariffName,
+    public Tariff(@JsonProperty("id") int id,@JsonProperty("objName") String tariffName,
                   @JsonProperty("statusId") int statusId) {
         super(id);
         setObjName(tariffName);

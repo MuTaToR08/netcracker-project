@@ -1,6 +1,8 @@
 package com.netcraker.project.bd.server.model.client;
 
 import com.netcraker.project.bd.config.ListenerContext;
+import com.netcraker.project.bd.server.model.AbstractAccess;
+import com.netcraker.project.bd.shared.objects.client.Billing;
 import com.netcraker.project.bd.shared.objects.client.CSI;
 import com.netcraker.project.bd.shared.objects.client.Customer;
 
@@ -10,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ModelCustomer {
 
@@ -19,6 +22,17 @@ public class ModelCustomer {
         this.context = context;
     }
 
+    public List<Billing> getBillings(int customerId)
+    {
+        return new ModelBilling(context).getOfCustomer(customerId);
+    }
+    public List<Billing> getBillingsSuccess(int customerId)
+    {
+
+        return new ModelBilling(context).getOfCustomer(customerId).stream()
+            .filter(billing -> billing.getStatus()==31)
+            .collect(Collectors.toList());
+    }
     public List<CSI> getCSI(int customerId)
     {
         ModelTSP modelTSP = new ModelTSP(context);
@@ -52,17 +66,8 @@ public class ModelCustomer {
         try {
             Connection cn = ListenerContext.getDBOracle(context);
             Statement st = cn.createStatement();
-            /*customerId objects.object_id%TYPE, --привязка к типу поля empinfo
-typeId objects.object_type_id%TYPE,
-fio params.string%TYPE,
-inn params.numb%TYPE,
-phone params.numb%TYPE,
-login params.string%TYPE,
-password params.string%TYPE,
-tariffId objects.object_id%TYPE,
-status params.numb%TYPE,
-balance number,
-addDate date*/
+
+
             ResultSet rs = st.executeQuery ("SELECT * FROM TABLE(CUSTUMER.GetCustomer("+customerId+"))");
             rs.next();
             ret  = new Customer(rs.getInt("customerId"),rs.getInt("typeId"),rs.getString("fio"),rs.getInt("inn"),

@@ -149,7 +149,10 @@ main
 .csi-flow > div {
     float:left;
     margin-left: 10px;
-
+}
+.csi-flow
+{
+    clear: both;
 }
 
 .customer-csi-outer {

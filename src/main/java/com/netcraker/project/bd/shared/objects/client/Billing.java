@@ -3,10 +3,12 @@ package com.netcraker.project.bd.shared.objects.client;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.netcraker.project.bd.client.BD;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.Date;
 import java.util.HashMap;
 
 @Json
@@ -64,7 +66,13 @@ public class Billing extends ObjectBD {
     @Override
     @JsonIgnore
     public String getHtmlUl() {
-        return "start:"+startDate;
+        Date en = null;
+        String st_en = "";
+        if(!startDate.equals(""))
+            en = new Date(startDate);
+        if(en != null)
+            st_en = DateTimeFormat.getShortDateFormat().format(en);
+        return "start:"+st_en+"|"+publicName();
     }
 
     @Override

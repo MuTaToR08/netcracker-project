@@ -2,10 +2,12 @@ package com.netcraker.project.bd.shared.objects.client;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.netcraker.project.bd.client.BD;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
+import java.util.Date;
 import java.util.HashMap;
 
 @Json
@@ -21,7 +23,7 @@ public class CSI extends ObjectBD {
         else status = 1;
         if(e.containsKey("start") && e.get("start") != null) start = e.get("start").toString();
         else start = "";
-        if(e.containsKey("end") && e.get("end") !=       null) status =Integer.valueOf(e.get("end").toString());
+        if(e.containsKey("end") && e.get("end") !=       null) end =e.get("end").toString();
         else end = "";
         if(e.containsKey("tsp") && e.get("tsp") !=       null) tsp = new TSP((HashMap<String,Object>)e.get("tsp"));
         else tsp = null;
@@ -80,7 +82,21 @@ public class CSI extends ObjectBD {
     @Override
     @JsonIgnore
     public String getHtmlUl() {
-        return (BD.statuses.get(status)==null?"":BD.statuses.get(status).getText())+"|"+start+"-"+end+"|"+
+        Date st = null;
+        String st_st = "";
+        if(!start.equals(""))
+            st = new Date(start);
+        if(st != null)
+            st_st = DateTimeFormat.getShortDateFormat().format(st);
+        Date en = null;
+        String st_en = "";
+        if(!end.equals(""))
+            en = new Date(end);
+        if(en != null)
+            st_en = DateTimeFormat.getShortDateFormat().format(en);
+        return (BD.statuses.get(status)==null?"":BD.statuses.get(status).getText())+"|"
+                + st_st + "-"
+                + st_en + "|"+
                 (BD.statuses.get(tsp.getService().getView())==null?"":BD.statuses.get(tsp.getService().getView()).getText())+
                 "|"+tsp.getService().getName()+"|"+tsp.getPrice()+"руб";
     }

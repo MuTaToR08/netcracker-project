@@ -1,7 +1,9 @@
 package com.netcraker.project.bd.shared.objects.client;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netcraker.project.bd.client.BD;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
@@ -36,6 +38,7 @@ public class Service extends ObjectBD {
                 '}';
     }
 
+    @JsonIgnore
     public String getName() {
         //return name;
         return getObjName();
@@ -44,6 +47,15 @@ public class Service extends ObjectBD {
     public void setName(String name) {
         //this.name = name;
         setObjName(name);
+    }
+
+    @Override
+    @JsonIgnore
+    public String getHtmlUl() {
+        return publicName()+" "+(BD.statuses.get(view)==null?"":BD.statuses.get(view).getText())+" "
+                +(BD.statuses.get(type)==null?"":BD.statuses.get(type).getText())+" "
+                +period+" "
+                +(BD.statuses.get(periodType)==null?"":BD.statuses.get(periodType).getText());
     }
 
     public int getView() {
@@ -79,7 +91,7 @@ public class Service extends ObjectBD {
     }
 
     @JsonCreator
-    public Service(@JsonProperty("id") int id,@JsonProperty("name") String name,
+    public Service(@JsonProperty("id") int id,@JsonProperty("objName") String name,
                    @JsonProperty("view") int view,@JsonProperty("type") int type,
                    @JsonProperty("period") int period,@JsonProperty("periodType") int periodType) {
         super(id);

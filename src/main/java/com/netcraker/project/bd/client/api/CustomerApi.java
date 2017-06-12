@@ -1,6 +1,7 @@
 package com.netcraker.project.bd.client.api;
 
 
+import com.netcraker.project.bd.shared.objects.client.Billing;
 import com.netcraker.project.bd.shared.objects.client.CSI;
 import com.netcraker.project.bd.shared.objects.client.Customer;
 import org.fusesource.restygwt.client.MethodCallback;
@@ -25,5 +26,9 @@ public interface CustomerApi extends RestService {
     @GET
     @Path("{id}/csi")
     void getCSICustomer(@PathParam("id") int id, MethodCallback<List<CSI>> listMethodCallback);
+
+    @GET
+    @Path("{id}/billing/success")
+    void getBillingCustomer(@PathParam("id") int id, MethodCallback<List<Billing>> listMethodCallback);
 
 }

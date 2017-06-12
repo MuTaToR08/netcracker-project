@@ -3,6 +3,7 @@ package com.netcraker.project.bd.server.services.api.client;
 import com.netcraker.project.bd.config.ListenerContext;
 import com.netcraker.project.bd.server.model.client.ModelCustomer;
 import com.netcraker.project.bd.server.model.client.ModelTariff;
+import com.netcraker.project.bd.shared.objects.client.Billing;
 import com.netcraker.project.bd.shared.objects.client.CSI;
 import com.netcraker.project.bd.shared.objects.client.Customer;
 import com.sun.deploy.util.StringUtils;
@@ -59,6 +60,25 @@ public class ServiceCustomer implements RestService {
         ModelCustomer modelCustomer = new ModelCustomer(context);
 
         return modelCustomer.getCSI(id);
+    }
+
+    @GET
+    @Produces("application/json")
+    @Path("{id}/billing")
+    public List<Billing> getBilling(@PathParam("id") int id)
+    {
+        ModelCustomer modelCustomer = new ModelCustomer(context);
+
+        return modelCustomer.getBillings(id);
+    }
+    @GET
+    @Produces("application/json")
+    @Path("{id}/billing/success")
+    public List<Billing> getBillingSuccess(@PathParam("id") int id)
+    {
+        ModelCustomer modelCustomer = new ModelCustomer(context);
+
+        return modelCustomer.getBillingsSuccess(id);
     }
 
     @GET

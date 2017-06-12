@@ -1,6 +1,7 @@
 package com.netcraker.project.bd.shared.objects.client;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.apache.tapestry.wml.Do;
@@ -28,6 +29,17 @@ public class TSP extends ObjectBD {
     @Override
     public String getObjectClass() {
         return "tsp";
+    }
+
+    @Override
+    public String getHtmlUl() {
+        return super.getHtmlUl();
+    }
+
+    @Override
+    @JsonIgnore
+    public String publicName() {
+        return service==null?"":service.publicName()+"("+tariff.publicName()+") "+price+"руб";
     }
 
     @Override

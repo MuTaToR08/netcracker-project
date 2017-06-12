@@ -28,27 +28,27 @@ public class AbstractAccess {
         defaultObject(ret,rs);
         return ret;
     }
+
     public ObjectBD templateGetById( Integer id) throws SQLException {
         if(Objects.equals(dm.getObjectName(), ""))
             throw new SQLException("not name return function");
         return templateGetById(dm.getObjectName(),id);
     }
+
     public ObjectBD templateGetBySQL( String sql) throws SQLException {
-            if(Objects.equals(dm.getObjectName(), ""))
-                throw new SQLException("not name return function");
-            return templateGetById(dm.getObjectName(),sql);
-        }
+        if(Objects.equals(dm.getObjectName(), ""))
+            throw new SQLException("not name return function");
+        return templateGetById(dm.getObjectName(),sql);
+    }
 
     public ObjectBD templateGetById(String table, Integer id) throws SQLException {
         return templateGetById(table,"("+id+")");
     }
 
     public ObjectBD templateGetById(String table, String SQL) throws SQLException {
-
         String statementPatern = "(("+SQL+"))";
 
         Connection cn = ListenerContext.getDBOracle(context);
-
         CallableStatement st = cn.prepareCall("SELECT * FROM TABLE(GETOBJECTS."+table+statementPatern+")");
 
         ResultSet rs = st.executeQuery();
@@ -61,7 +61,6 @@ public class AbstractAccess {
     }
 
     private static void defaultObject(ObjectBD ret, ResultSet rs){
-
         try {
             if(rs.isClosed() || ret == null)
                     return;
@@ -95,6 +94,7 @@ public class AbstractAccess {
         st.close();
         return ret;
     }
+
     public List<? extends ObjectBD> templateGetAll() throws SQLException {
         if(Objects.equals(dm.getObjectName(), ""))
             throw new SQLException("not name return function");

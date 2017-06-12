@@ -1,16 +1,14 @@
 package com.netcraker.project.bd.shared.objects.networked;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.deser.std.NumberDeserializers;
-import com.google.gwt.user.client.Window;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 @Json
 public class Carrier extends ObjectBD {
@@ -49,6 +47,7 @@ public class Carrier extends ObjectBD {
     }
 
     @Override
+    @JsonIgnore
     public String getObjectClass() {
         return "carrier";
     }
@@ -76,9 +75,7 @@ public class Carrier extends ObjectBD {
         }
         int[] tmp = ports;
         int[] ports = new int[tmp.length+1];
-        for (int i = 0; i < tmp.length; i++) {
-            ports[i] = tmp[i];
-        }
+        System.arraycopy(tmp, 0, ports, 0, tmp.length);
         ports[tmp.length] = port;
     }
 
@@ -127,9 +124,7 @@ public class Carrier extends ObjectBD {
 
         int[] tmp = locations;
         int[] hardwares = new int[tmp.length+1];
-        for (int i = 0; i < tmp.length; i++) {
-            hardwares[i] = tmp[i];
-        }
+        System.arraycopy(tmp, 0, hardwares, 0, tmp.length);
         hardwares[tmp.length] = hardware;
     }
 

@@ -3,24 +3,16 @@ package com.netcraker.project.bd.client.windows;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.netcraker.project.bd.client.BD;
+import com.netcraker.project.bd.client.FactoryView;
 import com.netcraker.project.bd.client.api.TreeApi;
 import com.netcraker.project.bd.client.buttons.AdditionButton;
-import com.netcraker.project.bd.client.FactoryView;
 import com.netcraker.project.bd.client.full.FullWindowPanel;
-import com.netcraker.project.bd.shared.TypeName;
 import com.netcraker.project.bd.shared.containers.TreeNode;
+import com.netcraker.project.bd.shared.objects.ObjectBD;
 import com.netcraker.project.bd.shared.objects.controled.ExtendsButton;
 import com.netcraker.project.bd.shared.objects.controled.FullWindow;
-import com.netcraker.project.bd.shared.objects.ObjectBD;
-import com.netcraker.project.bd.shared.objects.client.*;
-import com.netcraker.project.bd.shared.objects.location.*;
-import com.netcraker.project.bd.shared.objects.networked.Carrier;
-import com.netcraker.project.bd.shared.objects.networked.Port;
-import com.netcraker.project.bd.shared.objects.networked.Router;
-import com.netcraker.project.bd.shared.objects.networked.Switch;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
@@ -28,14 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TreePanel implements Panels {
+
     private final RootPanel main = RootPanel.get("main");
-    //  private final TreePanel customers = new TreePanel();
     private final Panel listCustomer = new FlowPanel();
     private final TreeNode tree = new TreeNode();
     private final HashMap<Integer,TreeNode> allObject = new HashMap<>();
 
-
-    @Override
     public void replaceWindows() {
         replaceWindows(main);
     }
@@ -46,6 +36,7 @@ public class TreePanel implements Panels {
 
     public void makeupTree(TreeNode node,Panel panel)
     {
+
         FlowPanel ul = new FlowPanel();
         ul.setStyleName("tree-ul");
         int response = 0;
@@ -62,18 +53,13 @@ public class TreePanel implements Panels {
             html.addStyleName("tree-element");
 
             Button open = new Button("Open", new ClickHandler() {
-                @Override
                 public void onClick(ClickEvent clickEvent) {
                     TreeApi treeApi = GWT.create(TreeApi.class);
                     final int id = Integer.valueOf(clickEvent.getRelativeElement().getAttribute("data-id"));
                     BD.viewPreloader();
                     treeApi.getChilds(id, new MethodCallback<List<Object>>() {
-                        @Override
-                        public void onFailure(Method method, Throwable throwable) {
+                        public void onFailure(Method method, Throwable throwable) {}
 
-                        }
-
-                        @Override
                         public void onSuccess(Method method, List<Object> objects) {
                             addToTree(id,objects);
                             hideNonClock(id,tree);
@@ -82,17 +68,13 @@ public class TreePanel implements Panels {
                     });
                 }
             });
+
             open.getElement().setAttribute("data-id",String.valueOf(treeNode.getElemnt().getId()));
             open.setStyleName("button-open");
-            /*html.addDomHandler(new ClickHandler() {
-                @Override
-                public void onClick(ClickEvent clickEvent) {
-
-                }
-            }, ClickEvent.getType());*/
 
             data.add(html);
             data.add(open);
+
             if(treeNode.getElemnt() instanceof FullWindow) {
                 Button visib = new Button("visible", new ClickHandler() {
                     @Override
@@ -114,6 +96,7 @@ public class TreePanel implements Panels {
                     data.add(flowPanel);
                 }
             }
+
             li.add(data);
             data.setStyleName("info");
             treeflow.setStyleName("children");
@@ -136,20 +119,15 @@ public class TreePanel implements Panels {
             if(!ret && treeNode.getElemnt().getId()==id) {
                 ret = true;
                 for(TreeNode treeNode1 : treeNode.getChildren())
-                {
                     treeNode1.setVisible(true);
-                }
             }
             if(ret)
             {
                 curRet = true;
                 treeNode.setVisible(true);
-
             }
             else
-            {
                 treeNode.setVisible(false);
-            }
         }
         return curRet;
     }
@@ -165,9 +143,8 @@ public class TreePanel implements Panels {
                 continue;
             }
             if(treeNode.getElemnt().getId() != id)
-            {
                 treeNode.setVisible(false);
-            }else
+            else
             {
                 treeNode.setVisible(true);
                 visible(id,treeNode,true);
@@ -192,20 +169,16 @@ public class TreePanel implements Panels {
         }
     }
 
-    @Override
     public void refreshData() {
         tree.getChildren().clear();
         allObject.clear();
         TreeApi treeApi = GWT.create(TreeApi.class);
         BD.viewPreloader();
         final int idGet = 0;
+
         treeApi.getChilds(idGet, new MethodCallback<List<Object>>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
+            public void onFailure(Method method, Throwable throwable) {}
 
-            }
-
-            @Override
             public void onSuccess(Method method, List<Object> objects) {
                 addToTree(idGet,objects);
                 makeupTree();
@@ -213,20 +186,15 @@ public class TreePanel implements Panels {
         });
     }
 
-
     public void refreshData(int id) {
+        final int idGet = id;
         tree.getChildren().clear();
         allObject.clear();
         TreeApi treeApi = GWT.create(TreeApi.class);
-        final int idGet = id;
         BD.viewPreloader();
         treeApi.getParents(id, new MethodCallback<List<Object>>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
+            public void onFailure(Method method, Throwable throwable) {}
 
-            }
-
-            @Override
             public void onSuccess(Method method, List<Object> objects) {
                 for (Object object : objects) {
                     ObjectBD tmp = FactoryView.createObject(object);
@@ -241,30 +209,16 @@ public class TreePanel implements Panels {
     }
 
     private void treeCreate(TreeNode tr)
-    {
-
-
-    }
-
-
-
-
+    {}
 
     private  TreeNode addToNode(int idGet,ObjectBD tmp)
     {
         if(idGet == 0 || allObject.get(idGet) == null)
             return tree.addChildren(tmp);
-
         return allObject.get(idGet).addChildren(tmp);
     }
 
-    public TreePanel() {
+    public TreePanel() {}
 
-    }
-
-    private void defaultWidgets() {
-
-    }
-
-
+    private void defaultWidgets() {}
 }

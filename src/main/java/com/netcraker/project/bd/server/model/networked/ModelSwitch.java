@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ModelSwitch implements DefaultMethod<Switch>{
+
     private ServletContext context;
 
     public ModelSwitch(ServletContext context) {

@@ -1,11 +1,11 @@
 package com.netcraker.project.bd.shared.objects.client;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gwt.user.client.ui.Widget;
 import com.netcraker.project.bd.client.BD;
-import com.netcraker.project.bd.shared.objects.controled.FullWindow;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
+import com.netcraker.project.bd.shared.objects.controled.FullWindow;
 import org.fusesource.restygwt.client.Json;
 
 import java.util.HashMap;
@@ -54,7 +54,6 @@ public class Customer extends ObjectBD implements FullWindow {
         return getFio();
     }
 
-    //private int type;
     private String fio;
     private int inn;
     private int phone;
@@ -70,7 +69,6 @@ public class Customer extends ObjectBD implements FullWindow {
     }
 
     public void setType(int type) {
-        //this.type = type;
         setObjectType(type);
     }
 
@@ -107,7 +105,6 @@ public class Customer extends ObjectBD implements FullWindow {
                     @JsonProperty("balance") double balance) {
         super(id);
 
-        //this.type = type;
         setObjectType(type);
         this.fio = fio;
         this.inn = inn;
@@ -120,11 +117,13 @@ public class Customer extends ObjectBD implements FullWindow {
     }
 
     @Override
+    @JsonIgnore
     public String getObjectClass() {
         return "customer";
     }
 
     @Override
+    @JsonIgnore
     public String getHtmlUl() {
         return publicName()+", inn:"+inn+", username:"+username+"|"+(BD.statuses.get(status)==null?"":BD.statuses.get(status).getText())+"|balance:"+balance;
     }

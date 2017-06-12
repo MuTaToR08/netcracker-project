@@ -18,7 +18,7 @@ import java.util.List;
 public class ServiceStand implements RestService {
 
     @Context
-    ServletContext  context;
+    private ServletContext  context;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

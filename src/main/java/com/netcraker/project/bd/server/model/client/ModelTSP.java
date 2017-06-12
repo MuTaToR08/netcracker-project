@@ -9,12 +9,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class ModelTSP {
+
     private ServletContext context;
 
     public ModelTSP(ServletContext context) {
         this.context = context;
     }
-
 
     public TSP getById(int id)
     {

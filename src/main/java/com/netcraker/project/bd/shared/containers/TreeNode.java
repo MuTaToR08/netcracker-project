@@ -1,20 +1,18 @@
 package com.netcraker.project.bd.shared.containers;
 
 import com.netcraker.project.bd.shared.objects.ObjectBD;
-import com.netcraker.project.bd.shared.objects.location.Building;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class TreeNode {
-        private ObjectBD elemnt;
-    //private SimpleContainer<? super ObjectBD> elemnt;
-    protected List<TreeNode> children = new ArrayList<>();
+    private ObjectBD elemnt;
+    private List<TreeNode> children = new ArrayList<>();
     private boolean visible;
     private boolean opened;
 
-    public TreeNode(SimpleContainer<? super ObjectBD> add) {
+    private TreeNode(SimpleContainer<? super ObjectBD> add) {
         elemnt = add.getData();
     }
 
@@ -39,10 +37,6 @@ public class TreeNode {
         return elemnt;
     }
 
-   /* public SimpleContainer<? super ObjectBD> getContainer() {
-        return elemnt;
-    }*/
-
     public TreeNode() {
         visible = true;
         opened = true;
@@ -56,9 +50,6 @@ public class TreeNode {
         this.elemnt =(elemnt);
     }
 
-    /*public void setContainer(SimpleContainer<? super ObjectBD> cont){
-        this.elemnt.setData(cont.getData());
-}*/
     public void setChildren(List<TreeNode> children) {
         this.children = children;
     }
@@ -74,7 +65,7 @@ public class TreeNode {
         }
         return tmp;
     }
-    public TreeNode(ObjectBD elemnt) {
+    private TreeNode(ObjectBD elemnt) {
 
         this.elemnt = (elemnt);
         opened = false;

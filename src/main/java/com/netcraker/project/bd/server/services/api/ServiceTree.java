@@ -1,7 +1,6 @@
 package com.netcraker.project.bd.server.services.api;
 
 import com.netcraker.project.bd.server.model.FactoryObjectsBD;
-import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.RestService;
 
 import javax.servlet.ServletContext;
@@ -17,7 +16,7 @@ import java.util.List;
 public class ServiceTree implements RestService {
 
     @Context
-    ServletContext context;
+    private ServletContext context;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -35,10 +34,6 @@ public class ServiceTree implements RestService {
         return (List<Object>) new FactoryObjectsBD(context).getChields(id);
     }
 
-
-
-
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("children/")
@@ -46,5 +41,4 @@ public class ServiceTree implements RestService {
     {
         return getChildes(0);
     }
-
 }

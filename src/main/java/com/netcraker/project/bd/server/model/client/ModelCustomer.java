@@ -1,7 +1,6 @@
 package com.netcraker.project.bd.server.model.client;
 
 import com.netcraker.project.bd.config.ListenerContext;
-import com.netcraker.project.bd.server.model.AbstractAccess;
 import com.netcraker.project.bd.shared.objects.client.Billing;
 import com.netcraker.project.bd.shared.objects.client.CSI;
 import com.netcraker.project.bd.shared.objects.client.Customer;
@@ -28,11 +27,11 @@ public class ModelCustomer {
     }
     public List<Billing> getBillingsSuccess(int customerId)
     {
-
         return new ModelBilling(context).getOfCustomer(customerId).stream()
             .filter(billing -> billing.getStatus()==31)
             .collect(Collectors.toList());
     }
+
     public List<CSI> getCSI(int customerId)
     {
         ModelTSP modelTSP = new ModelTSP(context);
@@ -60,13 +59,13 @@ public class ModelCustomer {
         }
         return list;
     }
+
     public Customer getById(int customerId)
     {
         Customer ret = null;
         try {
             Connection cn = ListenerContext.getDBOracle(context);
             Statement st = cn.createStatement();
-
 
             ResultSet rs = st.executeQuery ("SELECT * FROM TABLE(CUSTUMER.GetCustomer("+customerId+"))");
             rs.next();

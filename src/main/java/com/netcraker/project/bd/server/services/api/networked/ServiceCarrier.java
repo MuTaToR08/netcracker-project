@@ -17,7 +17,7 @@ import java.util.List;
 public class ServiceCarrier implements RestService {
 
     @Context
-    ServletContext context;
+    private ServletContext context;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -26,7 +26,6 @@ public class ServiceCarrier implements RestService {
         return new ModelCarrier(context).getAll();
     }
 
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
@@ -34,6 +33,4 @@ public class ServiceCarrier implements RestService {
     {
         return new ModelCarrier((context)).getById(id);
     }
-
-
 }

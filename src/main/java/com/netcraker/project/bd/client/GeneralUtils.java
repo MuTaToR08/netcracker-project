@@ -9,14 +9,11 @@ import com.netcraker.project.bd.shared.objects.Status;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by mutat on 06.06.2017.
- */
-public class GeneralUtils/*<T>*/ {
+class GeneralUtils {
 
-    public static Map<Integer,Status> toMapStatus(String jsonStr)
+    static Map<Integer,Status> toMapStatus(String jsonStr)
     {
-        Map<Integer,Status> map = new HashMap<Integer, Status>();
+        Map<Integer,Status> map = new HashMap<>();
 
         JSONValue parsed = JSONParser.parseStrict(jsonStr);
         JSONObject jsonObj = parsed.isObject();
@@ -28,7 +25,8 @@ public class GeneralUtils/*<T>*/ {
         }
         return map;
     }
-    public static Map<Integer,ObjectType> toMapObjects(String jsonStr)
+
+    static Map<Integer,ObjectType> toMapObjects(String jsonStr)
     {
         Map<Integer,ObjectType> map = new HashMap<Integer, ObjectType>();
 

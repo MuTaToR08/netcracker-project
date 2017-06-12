@@ -1,6 +1,7 @@
 package com.netcraker.project.bd.shared.objects.location;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 import org.fusesource.restygwt.client.Json;
@@ -33,11 +34,13 @@ public class Stock extends ObjectBD {
     }
 
     @Override
+    @JsonIgnore
     public String getHtmlUl() {
         return publicName()+" №"+number+" площадь:"+size;
     }
 
     @Override
+    @JsonIgnore
     public String getObjectClass() {
         return "stock";
     }

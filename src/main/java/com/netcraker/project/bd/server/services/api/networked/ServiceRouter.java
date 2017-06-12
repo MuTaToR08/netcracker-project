@@ -15,8 +15,9 @@ import java.util.List;
 
 @Path("router")
 public class ServiceRouter implements RestService{
+
     @Context
-    ServletContext context;
+    private ServletContext context;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

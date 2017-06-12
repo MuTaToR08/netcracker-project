@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 @Json
 public class CSI extends ObjectBD {
+
     private int status;
     private String start;
     private String end;
@@ -94,16 +95,12 @@ public class CSI extends ObjectBD {
             en = new Date(end);
         if(en != null)
             st_en = DateTimeFormat.getShortDateFormat().format(en);
+
         return (BD.statuses.get(status)==null?"":BD.statuses.get(status).getText())+"|"
                 + st_st + "-"
                 + st_en + "|"+
                 (BD.statuses.get(tsp.getService().getView())==null?"":BD.statuses.get(tsp.getService().getView()).getText())+
                 "|"+tsp.getService().getName()+"|"+tsp.getPrice()+"руб";
-    }
-
-    @Override
-    public String publicName() {
-        return super.publicName();
     }
 
     @JsonCreator

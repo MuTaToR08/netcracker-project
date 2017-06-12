@@ -53,7 +53,4 @@ public class Status {
         this.text = text;
     }
 
-    public String publicName() {
-        return text;
-    }
 }

@@ -3,9 +3,11 @@ package com.netcraker.project.bd.server.model;
 import com.netcraker.project.bd.config.ListenerContext;
 import com.netcraker.project.bd.server.model.client.*;
 import com.netcraker.project.bd.server.model.location.*;
-import com.netcraker.project.bd.server.model.networked.*;
+import com.netcraker.project.bd.server.model.networked.ModelCarrier;
+import com.netcraker.project.bd.server.model.networked.ModelPort;
+import com.netcraker.project.bd.server.model.networked.ModelRouter;
+import com.netcraker.project.bd.server.model.networked.ModelSwitch;
 import com.netcraker.project.bd.shared.TypeName;
-import com.netcraker.project.bd.shared.containers.SimpleContainer;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 
 import javax.servlet.ServletContext;
@@ -17,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FactoryObjectsBD {
-
 
     private ServletContext context;
 
@@ -31,22 +32,21 @@ public class FactoryObjectsBD {
 
         Connection cn = ListenerContext.getDBOracle(context);
         Statement st;
+
         try {
             st = cn.createStatement();
-
             ResultSet rs = st.executeQuery(String.format("SELECT * FROM objects START WITH object_id = %d CONNECT BY object_id = PRIOR container_id  ORDER BY LEVEL DESC", id));
 
             while (rs.next())
             {
-                SimpleContainer<? super ObjectBD> test = getObject(rs.getInt("object_id"),rs.getInt("object_type_id"));
+                ObjectBD test = getObject(rs.getInt("object_id"),rs.getInt("object_type_id"));
 
-                if(test.getData() == null)
+                if(test == null)
                     continue;
-                ret.add(test.getData());
+                ret.add(test);
             }
         } catch(SQLException e){
             e.printStackTrace();
-            //catch e;
         }
 
         return ret;
@@ -63,10 +63,10 @@ public class FactoryObjectsBD {
 
             while (rs.next())
             {
-                SimpleContainer<? super ObjectBD> test = getObject(rs.getInt("object_id"),rs.getInt("object_type_id"));
+                ObjectBD test = getObject(rs.getInt("object_id"),rs.getInt("object_type_id"));
 
-                if (null != test.getData()) {
-                    ret.add(test.getData());
+                if (null != test) {
+                    ret.add(test);
                 }
             }
         } catch(SQLException e){
@@ -78,10 +78,10 @@ public class FactoryObjectsBD {
 
 
 
-    public SimpleContainer<? super ObjectBD> getObject(int objectId){
+    public ObjectBD getObject(int objectId){
         Connection cn = ListenerContext.getDBOracle(context);
         Statement st;
-        SimpleContainer<? super ObjectBD> ret = null;
+        ObjectBD ret = null;
         try {
             st = cn.createStatement();
 
@@ -101,22 +101,22 @@ public class FactoryObjectsBD {
 
 
 
-    public SimpleContainer<? super ObjectBD> getObject(int objectId, int type)
+    public ObjectBD getObject(int objectId, int type)
     {
-        SimpleContainer<? super ObjectBD> ret = new SimpleContainer<>();
+        ObjectBD ret = null;
         TypeName typeName = TypeName.forType(type);
         switch (typeName){
             case BUILDING://Здание
-                ret.setData(new ModelBuilding(context).getById(objectId));
+                ret =(new ModelBuilding(context).getById(objectId));
                 break;
             case FLOOR://Этаж
-                ret.setData(new ModelFloor(context).getById(objectId));
+                ret =(new ModelFloor(context).getById(objectId));
                 break;
             case ROOM://Комната
-                ret.setData(new ModelRoom(context).getById(objectId));
+                ret=(new ModelRoom(context).getById(objectId));
                 break;
             case STAND://Стойка
-                ret.setData(new ModelStand(context).getById(objectId));
+                ret=(new ModelStand(context).getById(objectId));
                 break;
             ////case EQUIPMENT://Оборудование
             ////case HARDWARE://Железо
@@ -129,13 +129,13 @@ public class FactoryObjectsBD {
             //case SSD://SSD
             //case PC://ПК
             case CARRIER://Провод Carrier
-                ret.setData(new ModelCarrier(context).getById(objectId));
+                ret=(new ModelCarrier(context).getById(objectId));
                 break;
             case SWITCH://Комутатор
-                ret.setData(new ModelSwitch(context).getById(objectId));
+                ret=(new ModelSwitch(context).getById(objectId));
                 break;
             case ROUTER://Маршрутизатор
-                ret.setData(new ModelRouter(context).getById(objectId));
+                ret=(new ModelRouter(context).getById(objectId));
                 break;
             ////case STORAGE://Устройство хранения
             ////case LOCATION://Локация
@@ -146,31 +146,31 @@ public class FactoryObjectsBD {
             //case SWITCH_CONTORL://Управляемый комутатор
             //case SWITCH_SETTING://настраиваемый комутатор
             case PORT://Порт
-                ret.setData(new ModelPort(context).getById(objectId));
+                ret=(new ModelPort(context).getById(objectId));
                 break;
             case ORDER://Заказ
-                ret.setData(new ModelOrder(context).getById(objectId));
+                ret=(new ModelOrder(context).getById(objectId));
                 break;
             case CUSTOMER://Заказчик
-                ret.setData(new ModelCustomer(context).getById(objectId));
+                ret=(new ModelCustomer(context).getById(objectId));
                 break;
             case SERVICE://Услуга(сервис)
-                ret.setData(new ModelService(context).getById(objectId));
+                ret=(new ModelService(context).getById(objectId));
                 break;
             case TARIFF://Тариф
-                ret.setData(new ModelTariff(context).getById(objectId));
+                ret=(new ModelTariff(context).getById(objectId));
                 break;
             case CSI://Оказание услуги(SCI)
-                ret.setData(new ModelCSI(context).getById(objectId));
+                ret=(new ModelCSI(context).getById(objectId));
                 break;
             case BILLING://Операции по счёту(billing)
-                ret.setData(new ModelBilling(context).getById(objectId));
+                ret=(new ModelBilling(context).getById(objectId));
                 break;
             case TSP://Цена (TSP)
-                ret.setData(new ModelTSP(context).getById(objectId));
+                ret=(new ModelTSP(context).getById(objectId));
                 break;
             case STOCK://Хранилище
-                ret.setData(new ModelStock(context).getById(objectId));
+                ret=(new ModelStock(context).getById(objectId));
                 break;
             //case NEW_STAGE://Доп хранилища(для тестироваия)
                 ////case CONNECTING://Соеденительное

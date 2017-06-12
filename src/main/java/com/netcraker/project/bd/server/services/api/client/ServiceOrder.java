@@ -17,7 +17,7 @@ import java.util.List;
 public class ServiceOrder implements RestService {
 
     @Context
-    ServletContext context;
+    private ServletContext context;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -16,7 +16,6 @@ import java.util.List;
 @Path("room")
 public class ServiceRoom implements RestService {
 
-
     @Context
     ServletContext context;
 

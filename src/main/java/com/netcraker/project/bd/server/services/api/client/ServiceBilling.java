@@ -11,14 +11,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import java.util.List;
 
-/**
- * Created by mutat on 12.06.2017.
- */
 @Path("billing")
 public class ServiceBilling implements RestService {
 
     @Context
-    ServletContext context;
+    private ServletContext context;
 
     @GET
     public List<Billing> getAll()

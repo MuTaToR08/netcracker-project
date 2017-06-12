@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class ModelService {
+
     private ServletContext context;
 
     public ModelService(ServletContext context) {
@@ -20,9 +21,7 @@ public class ModelService {
         Service service= null;
         try {
             Connection cn = ListenerContext.getDBOracle(context);
-
             Statement st = cn.createStatement();
-
             ResultSet rs = st.executeQuery ("SELECT * FROM TABLE(getobjects.services("+id+"))");
 
             rs.next();

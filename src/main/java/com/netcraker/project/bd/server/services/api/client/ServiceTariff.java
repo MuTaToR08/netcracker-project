@@ -6,7 +6,10 @@ import com.netcraker.project.bd.shared.objects.client.Tariff;
 import org.fusesource.restygwt.client.RestService;
 
 import javax.servlet.ServletContext;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.sql.Connection;
@@ -20,6 +23,7 @@ public class ServiceTariff implements RestService {
 
     private static Map<Integer, Tariff> allTariff = new HashMap<>();
     private static long cache = 0;
+
     @Context
     private ServletContext context;
 
@@ -33,11 +37,8 @@ public class ServiceTariff implements RestService {
 
         ModelTariff modelTariff = new ModelTariff(context);
 
-
         return modelTariff.getById(id);
     }
-
-
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,8 +47,6 @@ public class ServiceTariff implements RestService {
         if(( System.currentTimeMillis() / 1000L)-cache < 3600)
             return allTariff;
 
-
-        //SELECT * FROM TABLE(getobjects.tariff);
         try {
             Connection cn = ListenerContext.getDBOracle(context);
 

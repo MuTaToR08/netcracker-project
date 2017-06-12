@@ -17,9 +17,8 @@ import java.util.List;
 @Path("floor")
 public class ServiceFloor implements RestService {
 
-
     @Context
-    ServletContext context;
+    private ServletContext context;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -28,15 +27,11 @@ public class ServiceFloor implements RestService {
         return new ModelFloor(context).getAll();
     }
 
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Floor getByid(@PathParam("id") int id)
+    public Floor getById(@PathParam("id") int id)
     {
         return new ModelFloor(context).getById(id);
-
     }
-
-
 }

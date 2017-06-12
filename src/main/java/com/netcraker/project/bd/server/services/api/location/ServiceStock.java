@@ -17,8 +17,7 @@ import java.util.List;
 public class ServiceStock implements RestService {
 
     @Context
-    ServletContext context;
-
+    private ServletContext context;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -23,6 +23,7 @@ public class Tariff extends ObjectBD {
     }
 
     @Override
+    @JsonIgnore
     public String getObjectClass() {
         return "tariff";
     }
@@ -35,7 +36,7 @@ public class Tariff extends ObjectBD {
 //
  }
 
-@JsonIgnore
+    @JsonIgnore
     public String getTariffName() {
         return getObjName();
     }

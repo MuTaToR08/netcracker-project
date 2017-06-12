@@ -3,7 +3,6 @@ package com.netcraker.project.bd.server.model.client;
 import com.netcraker.project.bd.config.ListenerContext;
 import com.netcraker.project.bd.server.model.AbstractAccess;
 import com.netcraker.project.bd.server.model.DefaultMethod;
-import com.netcraker.project.bd.shared.objects.ObjectBD;
 import com.netcraker.project.bd.shared.objects.client.Billing;
 
 import javax.servlet.ServletContext;
@@ -17,6 +16,7 @@ import java.util.List;
 
 
 public class ModelBilling implements DefaultMethod<Billing> {
+
     private ServletContext context;
 
     public ModelBilling(ServletContext context) {
@@ -33,11 +33,12 @@ public class ModelBilling implements DefaultMethod<Billing> {
         return null;
     }
 
-    public List<Billing> getOfCustomer(int id)
+    List<Billing> getOfCustomer(int id)
     {
         List<Billing> ret = new ArrayList<>();
         Connection cn = ListenerContext.getDBOracle(context);
-        CallableStatement st = null;
+        CallableStatement st;
+
         try {
             st = cn.prepareCall(
                     "SELECT gb.* FROM TABLE(getobjects.billing) gb,(SELECT * FROM objects WHERE object_type_id = 34" +
@@ -77,5 +78,4 @@ public class ModelBilling implements DefaultMethod<Billing> {
         return new Billing(rs.getInt("billingID"),rs.getString("startDate"),
                 rs.getString("endDate"),rs.getInt("status"),rs.getInt("amount"));
     }
-
 }

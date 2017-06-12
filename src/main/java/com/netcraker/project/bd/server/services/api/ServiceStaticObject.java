@@ -14,6 +14,7 @@ import javax.ws.rs.core.Context;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 
@@ -26,10 +27,8 @@ public class ServiceStaticObject implements RestService {
     public void setContext(ServletContext context) {
         this.context = context;
     }
-
     static protected Map<Integer,Status> statuses = null;
     static protected Map<Integer,ObjectType> objects = null;
-
 
     @GET
     @Path("types")
@@ -50,7 +49,7 @@ public class ServiceStaticObject implements RestService {
             }
 
         }
-        catch (Exception e) {}
+        catch (SQLException e) { e.printStackTrace();}
         return objects;
     }
 
@@ -59,8 +58,8 @@ public class ServiceStaticObject implements RestService {
     @Produces("application/json")
     public Map<Integer,Status> getAllStatus()
     {
-        //if(statuses != null)
-          //  return statuses;
+        if(statuses != null)
+            return statuses;
         statuses = new HashedMap();
         try {
             Connection cn = ListenerContext.getDBOracle(context);
@@ -68,13 +67,10 @@ public class ServiceStaticObject implements RestService {
                throw new IOException("DateBase not ready");
 
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery ("SELECT * FROM LIST_DATA");
+            ResultSet rs = st.executeQuery ("SELECT * FROM list_data");
             while(rs.next()) {
-                statuses.put(
-                        rs.getInt("list_id"),
-                        new Status(rs.getInt("list_id"),
-                                rs.getInt("attribute_id"),
-                                rs.getString("text")));
+                statuses.put(rs.getInt("list_id"),
+                             new Status(rs.getInt("list_id"), rs.getInt("attribute_id"), rs.getString("text")));
             }
         }
         catch (Exception e) {

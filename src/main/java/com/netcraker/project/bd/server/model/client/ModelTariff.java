@@ -21,9 +21,7 @@ public class ModelTariff {
         Tariff tariff = null;
         try {
             Connection cn = ListenerContext.getDBOracle(context);
-
             Statement st = cn.createStatement();
-
             ResultSet rs = st.executeQuery ("SELECT * FROM TABLE(getobjects.tariff("+id+"))");
 
             while(rs.next()) {

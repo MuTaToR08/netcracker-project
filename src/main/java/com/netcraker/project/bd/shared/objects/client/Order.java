@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 @Json
 public class Order extends ObjectBD{
+
     private String endDate;
     private String startDate;
     private int status;

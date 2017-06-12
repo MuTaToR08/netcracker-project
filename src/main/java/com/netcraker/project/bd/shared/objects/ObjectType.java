@@ -25,7 +25,6 @@ public class ObjectType {
     }
 
     @Override
-
     public String toString() {
         return "ObjectType{" +
                 "id=" + id +

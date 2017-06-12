@@ -1,7 +1,10 @@
 package com.netcraker.project.bd.client.windows;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.*;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
@@ -18,6 +21,7 @@ import java.util.Map;
 
 
 public class CustomerPanel implements Panels {
+
     private final BD mainWindows;
     private final RootPanel main = RootPanel.get("main");
     private final Panel customers = new FlowPanel();
@@ -37,18 +41,16 @@ public class CustomerPanel implements Panels {
         BD.viewPreloader();
         listCustomer.clear();
         CustomerApi RPC = GWT.create(CustomerApi.class);
+
         RPC.getAll(new MethodCallback<Map<Integer, Customer>>() {
             @Override
-            public void onFailure(Method method, Throwable throwable) {
-
-            }
+            public void onFailure(Method method, Throwable throwable) {}
 
             @Override
             public void onSuccess(Method method, Map<Integer, Customer> map) {
                 for(Map.Entry<Integer, Customer> cust: map.entrySet())
-                {
                     listCustomer.add(GetCustomerElements(cust.getValue()));
-                }
+
                 BD.hidePreloader();
             }
         });
@@ -56,12 +58,14 @@ public class CustomerPanel implements Panels {
 
     private Panel GetCustomerElements(final Customer customer)
     {
-        Panel pCustomer = new FlowPanel();
-        String status =mainWindows.statuses.get(customer.getStatus()).getText();
-        pCustomer.setStyleName("customer-entity");
         final Panel control = new FlowPanel();
-        control.setStyleName("customer-action");
         final Button button = new Button("Список подключённых услуг");
+        Panel pCustomer = new FlowPanel();
+        String status = BD.statuses.get(customer.getStatus()).getText();
+
+        pCustomer.setStyleName("customer-entity");
+        control.setStyleName("customer-action");
+
         button.addMouseUpHandler(new MouseUpHandler() {
             @Override
             public void onMouseUp(MouseUpEvent mouseUpEvent) {
@@ -77,12 +81,9 @@ public class CustomerPanel implements Panels {
                 popupCSI.setStyleName("customer-csi-outer");
                 popupCSI.setPopupPosition(control.getAbsoluteLeft(),control.getAbsoluteTop());
                 popupCSI.show();
-                panels.addDomHandler(new ClickHandler() {
-                    @Override
-                    public void onClick(ClickEvent clickEvent) {
-                        popupCSI.hide();
-                    }
-                },ClickEvent.getType());
+
+                panels.addDomHandler(clickEvent -> popupCSI.hide(),ClickEvent.getType());
+
                 CustomerApi customerApi = GWT.create(CustomerApi.class);
                 customerApi.getCSICustomer(customer.getId(), new MethodCallback<List<CSI>>() {
                     @Override
@@ -109,25 +110,22 @@ public class CustomerPanel implements Panels {
                                     csi.getTsp().getService().getPeriod()+" "+
                                     BD.getStatuses().get(csi.getTsp().getService().getPeriodType()).getText()));
                         }
-                        //panels.add(new Label(csis));
-
                     }
                 });
             }
         });
+
+        Button toTree = new Button("К дереву");
+        toTree.addMouseUpHandler(mouseUpEvent -> {
+            TreePanel tree= mainWindows.getTreePanel();
+            tree.replaceWindows();
+            tree.refreshData(customer.getId());
+        });
+
         control.add(new Button("Кнопка 1"));
         control.add(new Button("Кнопка 2"));
         control.add(new Button("Кнопка 3"));
         control.add(new Button("Кнопка 4"));
-        Button toTree = new Button("К дереву");
-        toTree.addMouseUpHandler(new MouseUpHandler() {
-            @Override
-            public void onMouseUp(MouseUpEvent mouseUpEvent) {
-                TreePanel tree= mainWindows.getTreePanel();
-                tree.replaceWindows();
-                tree.refreshData(customer.getId());
-            }
-        });
         control.add(toTree);
         control.add(button);
 
@@ -165,34 +163,31 @@ public class CustomerPanel implements Panels {
         pCustomer.add(text);
 
         FlowPanel popupDiv = new FlowPanel();
+
         popupDiv.add(new Label("Tariff info"));
         popupDiv.add(new Label("Id:"+customer.getTariff().getId()));
         popupDiv.add(new Label("name:"+customer.getTariff().getTariffName()));
         popupDiv.add(new Label("Status:"+BD.getStatuses().get(customer.getTariff().getStatusId()).getText()));
+
         final PopupPanel popupTariff = new PopupPanel();
         popupDiv.setStyleName("customer-tariff-popup");
         popupTariff.add(popupDiv);
 
         final Label  tarifftext = new Label("tariff:"+String.valueOf(customer.getTariff()));
         tarifftext.setStyleName("customer-tariff");
-        tarifftext.addMouseOverHandler(new MouseOverHandler() {
-            @Override
-            public void onMouseOver(MouseOverEvent mouseOverEvent) {
-                popupTariff.setPopupPosition(tarifftext.getAbsoluteLeft()+150,tarifftext.getAbsoluteTop());
-                popupTariff.show();
-            }
+
+        tarifftext.addMouseOverHandler(mouseOverEvent -> {
+            popupTariff.setPopupPosition(tarifftext.getAbsoluteLeft()+150,tarifftext.getAbsoluteTop());
+            popupTariff.show();
         });
-        tarifftext.addDomHandler(new MouseOutHandler() {
-            public void onMouseOut(MouseOutEvent event) {
-                popupTariff.hide();
-            }
-        }, MouseOutEvent.getType());
+
+        tarifftext.addDomHandler(event -> popupTariff.hide(), MouseOutEvent.getType());
+
         pCustomer.add(tarifftext);
 
         text = new Label("Balance:"+String.valueOf(customer.getBalance()+" руб"));
         text.setStyleName("customer-balance");
         pCustomer.add(text);
-
 
         block.add(horisontal);
         horisontal.add(pCustomer);
@@ -201,8 +196,6 @@ public class CustomerPanel implements Panels {
         horisontal.add(control);
         horisontal.setCellWidth(control,"50%");
         horisontal.setCellHeight(control,"100%");
-
-
 
         return block;
     }

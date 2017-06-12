@@ -12,7 +12,6 @@ import java.util.HashMap;
 @Json
 public class Service extends ObjectBD {
 
-    //private String name;
     private int view;
     private int type;
     private int period;
@@ -104,6 +103,7 @@ public class Service extends ObjectBD {
     }
 
     @Override
+    @JsonIgnore
     public String getObjectClass() {
         return "service";
     }

@@ -21,6 +21,7 @@ public class Stand  extends ObjectBD{
     }
 
     @Override
+    @JsonIgnore
     public String getHtmlUl() {
         return "Сойка. Размер:"+size+", слотов:"+slots;
     }

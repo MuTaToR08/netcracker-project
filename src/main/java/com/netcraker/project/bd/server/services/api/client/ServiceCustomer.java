@@ -71,6 +71,7 @@ public class ServiceCustomer implements RestService {
 
         return modelCustomer.getBillings(id);
     }
+
     @GET
     @Produces("application/json")
     @Path("{id}/billing/success")

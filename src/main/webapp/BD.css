@@ -160,16 +160,21 @@ main
 
 }
 
+#breadcrumbs
+{
+    margin: 0;
+    padding: 0;
+    width: 150px;
+}
 #breadcrumbs li
 {
-    float: left;
     list-style-type: none;
-
+    text-align: center;
 }
 #breadcrumbs li + li:before
 {
     content: '→';
-    display: inline-block;
-    color: green;
+    display: block;
+    color: red;
     margin: 0 5px;
 }

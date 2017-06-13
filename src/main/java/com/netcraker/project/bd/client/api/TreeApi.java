@@ -14,14 +14,14 @@ public interface TreeApi extends RestService {
 
     @GET
     @Path("parent/{id}/")
-    String getParents(@PathParam("id") int id, MethodCallback<List<Object>> objects);
+    void getParents(@PathParam("id") int id, MethodCallback<List<Object>> objects);
 
     @GET
     @Path("children/{id}")
-    String getChilds(@PathParam("id") int id, MethodCallback<List<Object>> objectsBD);
+    void getChilds(@PathParam("id") int id, MethodCallback<List<Object>> objectsBD);
 
     @GET
     @Path("reference/{id}")
-    String getReference(@PathParam("id") int id, MethodCallback<List<Object>> objectsBD);
+    void getReference(@PathParam("id") int id, MethodCallback<List<Object>> objectsBD);
 
 }

@@ -38,7 +38,7 @@ public class TreePanel implements Panels {
     {
 
         FlowPanel ul = new FlowPanel();
-        ul.setStyleName("tree-ul");
+        ul.setStyleName("tree-ul-li");
         int response = 0;
         for (TreeNode treeNode : node.getChildren()) {
             if(!treeNode.isVisible())
@@ -47,7 +47,6 @@ public class TreePanel implements Panels {
             FlowPanel data = new FlowPanel();
             FlowPanel treeflow = new FlowPanel();
             FlowPanel flowPanel = null;
-            ul.setStyleName("tree-ul-li");
             Widget html = new HTML(treeNode.getElemnt().getHtmlUl());
             html.setStyleName("tree-"+treeNode.getElemnt().getObjectClass());
             html.addStyleName("tree-element");

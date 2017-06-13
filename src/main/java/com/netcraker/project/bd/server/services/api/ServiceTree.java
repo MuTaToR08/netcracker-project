@@ -1,6 +1,7 @@
 package com.netcraker.project.bd.server.services.api;
 
 import com.netcraker.project.bd.server.model.FactoryObjectsBD;
+import com.netcraker.project.bd.shared.containers.TreeElement;
 import org.fusesource.restygwt.client.RestService;
 
 import javax.servlet.ServletContext;
@@ -41,4 +42,14 @@ public class ServiceTree implements RestService {
     {
         return getChildes(0);
     }
+
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("reference/{id}")
+    public List<TreeElement> getReferences(@PathParam("id") int id)
+    {
+        return  new FactoryObjectsBD(context).getReferences(id);
+    }
+
 }

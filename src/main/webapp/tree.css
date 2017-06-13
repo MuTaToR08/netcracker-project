@@ -325,3 +325,32 @@
 .opacity {
 
 }
+
+.customer-billing {
+    background-color: white;
+    display: inline-block;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.customer-csiTable {
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    display: inline-block;
+    clear: both;
+    margin-bottom: 20px;
+}
+
+.customer-reference {
+
+}
+
+.reference-title {
+    font-size: 25px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    color: white;
+    font-weight: bold;
+}

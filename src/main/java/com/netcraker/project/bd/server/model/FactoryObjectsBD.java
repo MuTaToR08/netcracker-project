@@ -8,6 +8,7 @@ import com.netcraker.project.bd.server.model.networked.ModelPort;
 import com.netcraker.project.bd.server.model.networked.ModelRouter;
 import com.netcraker.project.bd.server.model.networked.ModelSwitch;
 import com.netcraker.project.bd.shared.TypeName;
+import com.netcraker.project.bd.shared.containers.TreeElement;
 import com.netcraker.project.bd.shared.objects.ObjectBD;
 
 import javax.servlet.ServletContext;
@@ -99,9 +100,7 @@ public class FactoryObjectsBD {
         return ret;
     }
 
-
-
-    public ObjectBD getObject(int objectId, int type)
+    private ObjectBD getObject(int objectId, int type)
     {
         ObjectBD ret = null;
         TypeName typeName = TypeName.forType(type);
@@ -176,6 +175,29 @@ public class FactoryObjectsBD {
                 ////case CONNECTING://Соеденительное
 
         }
+        return ret;
+    }
+
+    public List<TreeElement> getReferences(int id) {
+        List<TreeElement> ret = new ArrayList<>();
+
+        Connection cn = ListenerContext.getDBOracle(context);
+        Statement st;
+
+        try {
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(String.format("SELECT o.*,r.attribute_id as attr FROM references r,objects o WHERE r.reference_id = o.object_id AND r.object_id = %d", id));
+            while (rs.next())
+            {
+                ObjectBD test = getObject(rs.getInt("object_id"),rs.getInt("object_type_id"));
+                if(test == null)
+                    continue;
+                ret.add(new TreeElement(test,rs.getInt("attr")));
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+
         return ret;
     }
 }

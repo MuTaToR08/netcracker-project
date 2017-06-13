@@ -173,7 +173,7 @@ main
 }
 #breadcrumbs li + li:before
 {
-    content: '→';
+    content: '↓';
     display: block;
     color: red;
     margin: 0 5px;
